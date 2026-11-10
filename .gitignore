@@ -1,0 +1,14 @@
+__pycache__/
+.pytest_cache/
+.Rhistory
+.RData
+.Rproj.user/
+*_AIDA_*.md
+
+# Copia de la aplicación 03 de DaFu que genera la instalación (copia de DaFu con la pestaña de AIDA)
+app03_AIDA/
+
+# Claves y configuración local
+.env
+.env.*
+!.env.example

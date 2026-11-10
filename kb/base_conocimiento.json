@@ -1,0 +1,4239 @@
+{
+ "metadatos": {
+  "nombre": "Base de conocimiento de AIDA",
+  "version": "A10-1.5",
+  "fecha": "2026-11-09",
+  "autor": "Ambrogetti, Ignacio Julián",
+  "origen": "Modelo lógico (A8) con las plantillas y advertencias agregadas en A10. Se mantiene junto con AIDA_frames_A10.cypher; una prueba automática controla que coincidan.",
+  "sin_limite": 1000000000.0,
+  "nota": "Los límites de rango con valor ±1,0E9 representan la ausencia de límite."
+ },
+ "parametros": {
+  "umbral_p_exacto": {
+   "id": "PR1",
+   "valor": 0.01,
+   "unidad": "probabilidad",
+   "regla": "R-MI-9",
+   "estado": "Confirmado"
+  },
+  "umbral_peso_bajo": {
+   "id": "PR2",
+   "valor": 2.0,
+   "unidad": "% del total (Global)",
+   "regla": "R-MI-11",
+   "estado": "Confirmado"
+  },
+  "distancia_contigua": {
+   "id": "PR3",
+   "valor": 1,
+   "unidad": "posiciones de índice",
+   "regla": "R-MI-12",
+   "estado": "Confirmado"
+  },
+  "minimo_clases": {
+   "id": "PR4",
+   "valor": 4,
+   "unidad": "clases",
+   "regla": "R-MS-5, R-MS-6",
+   "estado": "Confirmado"
+  },
+  "corte_pertenencia": {
+   "id": "PR5",
+   "valor": 0.5,
+   "unidad": "grado de pertenencia",
+   "regla": "R-MS-5, R-MS-6",
+   "estado": "Confirmado"
+  }
+ },
+ "magnitudes": {
+  "ValorTest": {
+   "nombre": "Valor test",
+   "columna": "Test.Value",
+   "unidad": "desviaciones típicas",
+   "minimo_valido": -1000000000.0,
+   "maximo_valido": 1000000000.0,
+   "definicion": "Desviación entre la medida observada en un grupo y la de la población, en desviaciones típicas de una ley normal.",
+   "campo_par": "valor_test"
+  },
+  "PValor": {
+   "nombre": "p-valor",
+   "columna": "p.Value",
+   "unidad": "probabilidad",
+   "minimo_valido": 0.0,
+   "maximo_valido": 1.0,
+   "definicion": "Probabilidad hipergeométrica asociada al valor test.",
+   "campo_par": "p_valor"
+  },
+  "CatClass": {
+   "nombre": "Cat.Class",
+   "columna": "Cat.Class",
+   "unidad": "porcentaje",
+   "minimo_valido": 0.0,
+   "maximo_valido": 100.0,
+   "definicion": "Porcentaje de la línea dentro del bloque (en filas y grupos, de la categoría dentro de la clase; en columnas, de la clase dentro de la categoría).",
+   "campo_par": "cat_class"
+  },
+  "ClassCat": {
+   "nombre": "Class.Cat",
+   "columna": "Class.Cat",
+   "unidad": "porcentaje",
+   "minimo_valido": 0.0,
+   "maximo_valido": 100.0,
+   "definicion": "Porcentaje del bloque dentro de la línea (en filas y grupos, de la clase dentro de la categoría; en columnas, de la categoría dentro de la clase).",
+   "campo_par": "class_cat"
+  },
+  "Global": {
+   "nombre": "Global",
+   "columna": "Global",
+   "unidad": "porcentaje",
+   "minimo_valido": 0.0,
+   "maximo_valido": 100.0,
+   "definicion": "Porcentaje de la línea en el total (en filas y grupos, de la categoría; en columnas, de la clase).",
+   "campo_par": "global"
+  },
+  "Weight": {
+   "nombre": "Weight",
+   "columna": "Weight",
+   "unidad": "peso",
+   "minimo_valido": 0.0,
+   "maximo_valido": 1000000000.0,
+   "definicion": "Marginal de la línea en la tabla analizada (en filas y grupos, de la categoría; en columnas, de la clase).",
+   "campo_par": "weight"
+  }
+ },
+ "estados": {
+  "E1": {
+   "significacion": "altamente significativo",
+   "direccion": "sobre-representación",
+   "intensidad": "fuerte",
+   "explicacion_corta": "V ≥ 2,58: altamente significativo, sobre-representación, fuerte."
+  },
+  "E2": {
+   "significacion": "significativamente probable",
+   "direccion": "sobre-representación",
+   "intensidad": "moderada",
+   "explicacion_corta": "1,96 ≤ V < 2,58: significativamente probable, sobre-representación, moderada."
+  },
+  "E3": {
+   "significacion": "sugerente",
+   "direccion": "sobre-representación",
+   "intensidad": "débil",
+   "explicacion_corta": "1,65 ≤ V < 1,96: sugerente, sobre-representación, débil."
+  },
+  "E4": {
+   "significacion": "no significativo",
+   "direccion": "neutra",
+   "intensidad": "nula",
+   "explicacion_corta": "−1,65 < V < 1,65: no significativo, neutra, nula."
+  },
+  "E5": {
+   "significacion": "sugerente",
+   "direccion": "sub-representación",
+   "intensidad": "débil",
+   "explicacion_corta": "−1,96 < V ≤ −1,65: sugerente, sub-representación, débil."
+  },
+  "E6": {
+   "significacion": "significativamente probable",
+   "direccion": "sub-representación",
+   "intensidad": "moderada",
+   "explicacion_corta": "−2,58 < V ≤ −1,96: significativamente probable, sub-representación, moderada."
+  },
+  "E7": {
+   "significacion": "altamente significativo",
+   "direccion": "sub-representación",
+   "intensidad": "fuerte",
+   "explicacion_corta": "V ≤ −2,58: altamente significativo, sub-representación, fuerte."
+  }
+ },
+ "rangos": [
+  {
+   "id": "RG1",
+   "regla": "R-MI-1",
+   "estado": "E1",
+   "magnitud": "ValorTest",
+   "limite_inferior": 2.58,
+   "limite_superior": 1000000000.0,
+   "cierre_inferior": true,
+   "cierre_superior": false
+  },
+  {
+   "id": "RG2",
+   "regla": "R-MI-2",
+   "estado": "E2",
+   "magnitud": "ValorTest",
+   "limite_inferior": 1.96,
+   "limite_superior": 2.58,
+   "cierre_inferior": true,
+   "cierre_superior": false
+  },
+  {
+   "id": "RG3",
+   "regla": "R-MI-3",
+   "estado": "E3",
+   "magnitud": "ValorTest",
+   "limite_inferior": 1.65,
+   "limite_superior": 1.96,
+   "cierre_inferior": true,
+   "cierre_superior": false
+  },
+  {
+   "id": "RG4",
+   "regla": "R-MI-4",
+   "estado": "E4",
+   "magnitud": "ValorTest",
+   "limite_inferior": -1.65,
+   "limite_superior": 1.65,
+   "cierre_inferior": false,
+   "cierre_superior": false
+  },
+  {
+   "id": "RG5",
+   "regla": "R-MI-5",
+   "estado": "E5",
+   "magnitud": "ValorTest",
+   "limite_inferior": -1.96,
+   "limite_superior": -1.65,
+   "cierre_inferior": false,
+   "cierre_superior": true
+  },
+  {
+   "id": "RG6",
+   "regla": "R-MI-6",
+   "estado": "E6",
+   "magnitud": "ValorTest",
+   "limite_inferior": -2.58,
+   "limite_superior": -1.96,
+   "cierre_inferior": false,
+   "cierre_superior": true
+  },
+  {
+   "id": "RG7",
+   "regla": "R-MI-7",
+   "estado": "E7",
+   "magnitud": "ValorTest",
+   "limite_inferior": -1000000000.0,
+   "limite_superior": -2.58,
+   "cierre_inferior": false,
+   "cierre_superior": true
+  }
+ ],
+ "etiquetas_difusas": {
+  "algunas": {
+   "id": "CD_algunas",
+   "variable": "proporcion_de_clases",
+   "funcion": "trapezoidal",
+   "parametros": [
+    0.0,
+    0.0,
+    0.25,
+    0.5
+   ]
+  },
+  "muchas": {
+   "id": "CD_muchas",
+   "variable": "proporcion_de_clases",
+   "funcion": "trapezoidal",
+   "parametros": [
+    0.3,
+    0.6,
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "advertencias": {
+  "AD1": {
+   "texto": "El valor test indica la significación de la asociación y no la magnitud del fenómeno.",
+   "disparador": "siempre",
+   "regla": "R-MI-8"
+  },
+  "AD2": {
+   "texto": "La asociación se apoya en pocos datos.",
+   "disparador": "peso_bajo",
+   "regla": "R-MI-11"
+  },
+  "AD3": {
+   "texto": "La exportación de DaFu contiene sólo asociaciones positivas con valor test mayor o igual que 1,65; las asociaciones negativas y las no significativas no se informan.",
+   "texto_novato": "AIDA sólo informa las asociaciones claras en las que un valor aparece más de lo esperado; las demás no figuran en el archivo de DaFu.",
+   "disparador": "sintesis",
+   "regla": "R-MS-10"
+  },
+  "AD4": {
+   "texto": "La tabla de contingencia fue escalada antes del análisis, por lo que los porcentajes son frecuencias relativas de la tabla escalada y no de los datos originales.",
+   "texto_novato": "Los datos se reescalaron antes del análisis: los porcentajes son proporciones de la tabla reescalada y no de los datos originales.",
+   "disparador": "escalado",
+   "regla": "R-MS-10"
+  },
+  "AD5": {
+   "texto": "La tabla de contingencia no fue escalada; los porcentajes son frecuencias relativas de los datos originales.",
+   "texto_novato": "Los datos no se reescalaron: los porcentajes son proporciones de los datos originales.",
+   "disparador": "no_escalado",
+   "regla": "R-MS-10"
+  },
+  "AD6": {
+   "texto": "Los resultados dependen de la elección de los conjuntos difusos: otra cantidad de conjuntos u otros límites pueden producir asociaciones distintas.",
+   "texto_novato": "Los resultados dependen de cómo se definieron los conjuntos difusos (los grupos de valores): con otra cantidad de conjuntos o con otros límites podrían aparecer asociaciones distintas.",
+   "disparador": "sintesis",
+   "regla": "R-MS-10"
+  },
+  "AD7": {
+   "texto": "El valor test mide la significación estadística de cada asociación y no la intensidad del fenómeno.",
+   "texto_novato": "Que una asociación sea clara no significa que el fenómeno sea más intenso.",
+   "disparador": "sintesis",
+   "regla": "R-MS-10"
+  }
+ },
+ "plantillas": [
+  {
+   "id": "P-MI-1",
+   "reglas": [
+    "R-MI-1"
+   ],
+   "perfil": "todos",
+   "texto": "Muy significativo. La categoría «[categoría]» tiene una fuerte asociación en [clase] (valor test = [V]; p < 0,01).",
+   "campos": [
+    "categoría",
+    "clase",
+    "V"
+   ]
+  },
+  {
+   "id": "P-MI-2",
+   "reglas": [
+    "R-MI-2"
+   ],
+   "perfil": "todos",
+   "texto": "Significativo. La categoría «[categoría]» tiene una asociación en [clase] (valor test = [V]; p = [p]).",
+   "campos": [
+    "categoría",
+    "clase",
+    "V",
+    "p"
+   ]
+  },
+  {
+   "id": "P-MI-3",
+   "reglas": [
+    "R-MI-3"
+   ],
+   "perfil": "todos",
+   "texto": "Poco significativo. La categoría «[categoría]» tiene una asociación débil en [clase] (valor test = [V]; p = [p]).",
+   "campos": [
+    "categoría",
+    "clase",
+    "V",
+    "p"
+   ]
+  },
+  {
+   "id": "P-MI-4",
+   "reglas": [
+    "R-MI-4"
+   ],
+   "perfil": "todos",
+   "texto": "La característica evaluada no muestra evidencia suficiente para considerarse propia del grupo analizado, debido a que el valor test no alcanza el valor crítico.",
+   "campos": []
+  },
+  {
+   "id": "P-MI-5",
+   "reglas": [
+    "R-MI-5",
+    "R-MI-6",
+    "R-MI-7"
+   ],
+   "perfil": "todos",
+   "texto": "La modalidad presenta asociación inversa con la clase, dado que el valor test es negativo y estadísticamente relevante.",
+   "campos": []
+  },
+  {
+   "id": "PV-1-N",
+   "reglas": [
+    "R-MI-1"
+   ],
+   "perfil": "novato",
+   "texto": "En [bloque], el [Cat.Class] % de los valores corresponde a [línea], mientras que en el total esa proporción es del [Global] %. Esa concentración distingue a [bloque] de los demás y es muy poco probable que se deba al azar. No indica que el fenómeno sea más intenso en [bloque].",
+   "campos": [
+    "bloque",
+    "línea",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-1-I",
+   "reglas": [
+    "R-MI-1"
+   ],
+   "perfil": "intermedio",
+   "texto": "[línea] caracteriza a [bloque]: valor test = [V] (altamente significativo). Su contribución a [bloque] es del [Cat.Class] %, frente al [Global] % del total. El valor test indica significación de la asociación, no magnitud del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-1-E",
+   "reglas": [
+    "R-MI-1"
+   ],
+   "perfil": "experto",
+   "texto": "[línea] en [bloque]: V = [V]; [p] (R-MI-1, sobre-representación). Cat.Class = [Cat.Class] %; Global = [Global] %; razón de proporciones = [razón]; Class.Cat = [Class.Cat] %. El valor test expresa la improbabilidad de la asociación bajo independencia, no la intensidad del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "p",
+    "Cat.Class",
+    "Global",
+    "razón",
+    "Class.Cat"
+   ]
+  },
+  {
+   "id": "PV-2-N",
+   "reglas": [
+    "R-MI-2"
+   ],
+   "perfil": "novato",
+   "texto": "En [bloque], el [Cat.Class] % de los valores corresponde a [línea], mientras que en el total esa proporción es del [Global] %. Es poco probable que esa diferencia se deba al azar. No indica que el fenómeno sea más intenso en [bloque].",
+   "campos": [
+    "bloque",
+    "línea",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-2-I",
+   "reglas": [
+    "R-MI-2"
+   ],
+   "perfil": "intermedio",
+   "texto": "[línea] caracteriza a [bloque]: valor test = [V] (significativamente probable). Su contribución a [bloque] es del [Cat.Class] %, frente al [Global] % del total. El valor test indica significación de la asociación, no magnitud del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-2-E",
+   "reglas": [
+    "R-MI-2"
+   ],
+   "perfil": "experto",
+   "texto": "[línea] en [bloque]: V = [V]; [p] (R-MI-2, sobre-representación). Cat.Class = [Cat.Class] %; Global = [Global] %; razón de proporciones = [razón]; Class.Cat = [Class.Cat] %. El valor test expresa la improbabilidad de la asociación bajo independencia, no la intensidad del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "p",
+    "Cat.Class",
+    "Global",
+    "razón",
+    "Class.Cat"
+   ]
+  },
+  {
+   "id": "PV-3-N",
+   "reglas": [
+    "R-MI-3"
+   ],
+   "perfil": "novato",
+   "texto": "En [bloque], el [Cat.Class] % de los valores corresponde a [línea], mientras que en el total esa proporción es del [Global] %. La diferencia es un indicio, pero podría deberse al azar. No indica que el fenómeno sea más intenso en [bloque].",
+   "campos": [
+    "bloque",
+    "línea",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-3-I",
+   "reglas": [
+    "R-MI-3"
+   ],
+   "perfil": "intermedio",
+   "texto": "[línea] se asocia con [bloque]: valor test = [V] (sugerente). Su contribución a [bloque] es del [Cat.Class] %, frente al [Global] % del total. El valor test indica significación de la asociación, no magnitud del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-3-E",
+   "reglas": [
+    "R-MI-3"
+   ],
+   "perfil": "experto",
+   "texto": "[línea] en [bloque]: V = [V]; [p] (R-MI-3, sobre-representación). Cat.Class = [Cat.Class] %; Global = [Global] %; razón de proporciones = [razón]; Class.Cat = [Class.Cat] %. El valor test expresa la improbabilidad de la asociación bajo independencia, no la intensidad del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "p",
+    "Cat.Class",
+    "Global",
+    "razón",
+    "Class.Cat"
+   ]
+  },
+  {
+   "id": "PV-4-N",
+   "reglas": [
+    "R-MI-4"
+   ],
+   "perfil": "novato",
+   "texto": "En [bloque], el [Cat.Class] % de los valores corresponde a [línea], frente al [Global] % del total. Esa diferencia es pequeña y bien puede deberse al azar, por lo que no hay evidencia suficiente para decir que [línea] distingue a [bloque]. No indica que el fenómeno sea más ni menos intenso en [bloque].",
+   "campos": [
+    "bloque",
+    "línea",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-4-I",
+   "reglas": [
+    "R-MI-4"
+   ],
+   "perfil": "intermedio",
+   "texto": "[línea] no se asocia de forma significativa con [bloque]: valor test = [V] (no significativo). Su contribución a [bloque] es del [Cat.Class] %, frente al [Global] % del total. El valor test indica significación de la asociación, no magnitud del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-4-E",
+   "reglas": [
+    "R-MI-4"
+   ],
+   "perfil": "experto",
+   "texto": "[línea] en [bloque]: V = [V]; [p] ([regla], no significativo). Cat.Class = [Cat.Class] %; Global = [Global] %; razón de proporciones = [razón]; Class.Cat = [Class.Cat] %. El valor test expresa la improbabilidad de la asociación bajo independencia, no la intensidad del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "p",
+    "regla",
+    "Cat.Class",
+    "Global",
+    "razón",
+    "Class.Cat"
+   ]
+  },
+  {
+   "id": "PV-5-N",
+   "reglas": [
+    "R-MI-5"
+   ],
+   "perfil": "novato",
+   "texto": "En [bloque], [línea] aparece menos de lo esperado: el [Cat.Class] % de los valores, frente al [Global] % del total. La diferencia es un indicio, pero podría deberse al azar. No indica que el fenómeno sea menos intenso en [bloque].",
+   "campos": [
+    "bloque",
+    "línea",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-6-N",
+   "reglas": [
+    "R-MI-6"
+   ],
+   "perfil": "novato",
+   "texto": "En [bloque], [línea] aparece menos de lo esperado: el [Cat.Class] % de los valores, frente al [Global] % del total. Es poco probable que esa diferencia se deba al azar. No indica que el fenómeno sea menos intenso en [bloque].",
+   "campos": [
+    "bloque",
+    "línea",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-7-N",
+   "reglas": [
+    "R-MI-7"
+   ],
+   "perfil": "novato",
+   "texto": "En [bloque], [línea] aparece menos de lo esperado: el [Cat.Class] % de los valores, frente al [Global] % del total. Es muy poco probable que esa diferencia se deba al azar. No indica que el fenómeno sea menos intenso en [bloque].",
+   "campos": [
+    "bloque",
+    "línea",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-5-I",
+   "reglas": [
+    "R-MI-5",
+    "R-MI-6",
+    "R-MI-7"
+   ],
+   "perfil": "intermedio",
+   "texto": "[línea] presenta sub-representación en [bloque]: valor test = [V] ([significación]). Su contribución a [bloque] es del [Cat.Class] %, frente al [Global] % del total. El valor test indica significación de la asociación, no magnitud del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "significación",
+    "Cat.Class",
+    "Global"
+   ]
+  },
+  {
+   "id": "PV-5-E",
+   "reglas": [
+    "R-MI-5",
+    "R-MI-6",
+    "R-MI-7"
+   ],
+   "perfil": "experto",
+   "texto": "[línea] en [bloque]: V = [V]; [p] ([regla], sub-representación). Cat.Class = [Cat.Class] %; Global = [Global] %; razón de proporciones = [razón]; Class.Cat = [Class.Cat] %. El valor test expresa la improbabilidad de la asociación bajo independencia, no la intensidad del fenómeno.",
+   "campos": [
+    "línea",
+    "bloque",
+    "V",
+    "p",
+    "regla",
+    "Cat.Class",
+    "Global",
+    "razón",
+    "Class.Cat"
+   ]
+  },
+  {
+   "id": "PT-1",
+   "reglas": [
+    "R-MI-12"
+   ],
+   "perfil": "todos",
+   "texto": "En [clase], [categoría] es contigua a [contigua]; en conjunto describen una transición entre categorías contiguas.",
+   "campos": [
+    "clase",
+    "categoría",
+    "contigua"
+   ]
+  },
+  {
+   "id": "PT-1-N",
+   "reglas": [
+    "R-MI-12"
+   ],
+   "perfil": "novato",
+   "texto": "[clase] se asocia además con [contigua], al lado de [categoría] en la escala de valores.",
+   "campos": [
+    "clase",
+    "categoría",
+    "contigua"
+   ]
+  }
+ ],
+ "secciones_sintesis": [
+  {
+   "id": "S1",
+   "nombre": "Descripción general",
+   "orden": 1,
+   "contenido": "Tipo de descripción, archivo analizado, cantidad de clases y de categorías.",
+   "debe_incluir": []
+  },
+  {
+   "id": "S2",
+   "nombre": "Resultados relevantes",
+   "orden": 2,
+   "contenido": "Un apartado por conjunto difuso, en orden de fuerza. En cada uno: con qué clases se asocia y qué tienen en común (las variables que comparten), sus asociaciones de mayor valor test con las cifras y, si las hay, sus transiciones con conjuntos contiguos.",
+   "contenido_novato": "Un apartado por conjunto difuso, de mayor a menor relevancia. En cada uno: con qué clases se asocia, qué tienen en común y en qué proporción de sus valores.",
+   "debe_incluir": []
+  },
+  {
+   "id": "S3",
+   "nombre": "Interpretación conclusiva",
+   "orden": 3,
+   "contenido": "Lectura de conjunto de los patrones, en términos estadísticos: en qué se parecen y en qué se diferencian las clases o grupos de clases según los conjuntos con que se asocian. Sólo cuando los conjuntos difieren en ello, cuáles se asocian con muchas clases (patrones constantes) y cuáles con pocas (singularidades).",
+   "debe_incluir": [
+    "distinción entre las diferencias estadísticamente relevantes y las que no lo son"
+   ]
+  },
+  {
+   "id": "S4",
+   "nombre": "Limitaciones metodológicas",
+   "orden": 4,
+   "contenido": "Límites del método que condicionan la lectura de los resultados.",
+   "debe_incluir": [
+    "escalado de la tabla",
+    "elección de los conjuntos difusos"
+   ]
+  }
+ ],
+ "perfiles": {
+  "novato": {
+   "nombre": "novato",
+   "terminologia": "llana",
+   "valor_test": "solo_nivel",
+   "frecuencias": "llano",
+   "p_valor_visible": false,
+   "class_cat_visible": false,
+   "razon_proporciones_visible": false,
+   "contribuciones_dimensiones": "no",
+   "instruccion_registro": "Explicaciones conceptuales, analogías simples sin cifras nuevas y frecuencias relativas, sin jerga técnica.",
+   "guia_redaccion": [
+    "Escribe para alguien sin formación en estadística: frases cortas (una idea por frase) y palabras de uso diario.",
+    "Nada de jerga: no uses «sobre-representación», «significativo», siglas ni nombres de pruebas. La intensidad de cada asociación ya viene dicha en palabras comunes («mucho más de lo esperable», «algo más de lo esperable»): úsala tal cual para esa asociación y no le pongas la de otra.",
+    "Cada cifra va en la forma «el N % de los valores de la clase está en este conjunto, cuando en el total ese conjunto sólo reúne el M %».",
+    "Cierra cada hallazgo con una frase breve y sin cifras que no repita la primera; no agregues adjetivos ni conclusiones propias. No uses la palabra «transición»: di que la misma clase también se asocia con el conjunto vecino."
+   ],
+   "ejemplo_estilo": "Hallazgos para el grupo de Ingresos Altos: Este grupo se asocia con dos medios de transporte. El que más lo distingue es el automóvil privado: el 62,4 % de los valores de esta clase está en ese medio, cuando en el total ese medio sólo reúne el 35,0 %; es decir, aparece mucho más de lo esperable. Algo parecido pasa, de forma menos marcada, con la motocicleta, que llega al 41,0 % frente al 22,0 % del total: algo más de lo esperable. En resumen, este grupo se concentra en el automóvil privado y, en menor medida, en la motocicleta.",
+   "intensidad_llana": {
+    "sobre-representación": {
+     "fuerte": "mucho más de lo esperable",
+     "moderada": "algo más de lo esperable",
+     "débil": "apenas más de lo esperable"
+    },
+    "sub-representación": {
+     "fuerte": "mucho menos de lo esperable",
+     "moderada": "algo menos de lo esperable",
+     "débil": "apenas menos de lo esperable"
+    }
+   }
+  },
+  "intermedio": {
+   "nombre": "intermedio",
+   "terminologia": "basica",
+   "valor_test": "valor_y_nivel",
+   "frecuencias": "contribucion",
+   "p_valor_visible": false,
+   "class_cat_visible": false,
+   "razon_proporciones_visible": false,
+   "contribuciones_dimensiones": "no",
+   "instruccion_registro": "Terminología estadística básica, valor test y contribución.",
+   "guia_redaccion": [
+    "Escribe para alguien con estadística básica: usa «valor test» junto a cada asociación y, en el primer párrafo, incluye una oración propia como esta: «El valor test mide cuán improbable es que la asociación sea casual; no mide cuán intenso es el fenómeno.»",
+    "Di siempre si la asociación es fuerte, moderada o débil (nunca «fuerza fuerte») y el porcentaje con su comparación («frente al N % del total»).",
+    "No uses p-valores, Class.Cat ni razones de proporciones. Una idea por frase, sin tecnicismos de más. La primera vez que nombres una transición, aclara que es la misma clase asociada con dos conjuntos vecinos. No enlaces con frases de relleno («Le sigue», «La tercera asociación es», «Cierra el grupo»): nombra la clase y da sus cifras."
+   ],
+   "ejemplo_estilo": "Hallazgos para el grupo de Ingresos Altos: Este grupo se asocia con dos medios de transporte. El automóvil privado lo caracteriza fuertemente: con un valor test de 4,50 la asociación es estadísticamente sólida, y el 62,4 % de los valores de la clase está en ese medio frente al 35,0 % del total. La motocicleta también se asocia, de forma moderada (valor test de 2,10; 41,0 % frente al 22,0 % del total). En resumen, el grupo se concentra en el automóvil privado y, con menos fuerza, en la motocicleta."
+  },
+  "experto": {
+   "nombre": "experto",
+   "terminologia": "tecnica",
+   "valor_test": "valor_y_nivel",
+   "frecuencias": "tecnico",
+   "p_valor_visible": true,
+   "class_cat_visible": true,
+   "razon_proporciones_visible": true,
+   "contribuciones_dimensiones": "condicionado",
+   "instruccion_registro": "Formulación técnica completa: valores test, p-valores, contribuciones de la categoría a la clase y razones de proporciones.",
+   "guia_redaccion": [
+    "Escribe para alguien con formación estadística: redacción técnica y compacta, sin analogías ni explicaciones de conceptos básicos.",
+    "De cada asociación da, en una sola cláusula o paréntesis y en este orden: valor test, p, porcentaje frente al total, Class.Cat y razón de proporciones. Si varias asociaciones seguidas tienen la misma intensidad, nómbrala una sola vez («sobre-representaciones fuertes de A (…), de B (…) y de C (…)»).",
+    "Usa los términos «sobre-representación», «valor test», «Class.Cat» y «razón de proporciones» sin definirlos; señala si cada asociación es fuerte, moderada o débil."
+   ],
+   "ejemplo_estilo": "Hallazgos para el grupo de Ingresos Altos: Se observa una sobre-representación fuerte del automóvil privado (valor test 4,50; p < 0,01; 62,4 % frente al 35,0 % del total; Class.Cat 31,2 %; razón de proporciones 1,78) y otra moderada de la motocicleta (valor test 2,10; p = 0,036; 41,0 % frente al 22,0 % del total; Class.Cat 12,5 %; razón de proporciones 1,86). La clase se concentra en el automóvil privado y, en menor grado, en la motocicleta."
+  }
+ },
+ "reglas": [
+  {
+   "id": "R-MI-1",
+   "enunciado": "V ≥ 2,58: altamente significativo, sobre-representación, fuerte.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP3"
+   ],
+   "usa": [
+    "ValorObservado",
+    "Rango"
+   ],
+   "conduce_a": [
+    "EstadoInterpretado"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "en_rango",
+      "valor": "RG1"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "valor_observado[ValorTest].rango_resultante",
+      "op": "=",
+      "valor": "RG1"
+     },
+     {
+      "campo": "par.estado",
+      "op": "=",
+      "valor": "E1"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Los umbrales 1,65, 1,96 y 2,58 y el signo del valor test delimitan siete rangos disjuntos que cubren la recta (catálogo A4, 4.1; Informe Inicial).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-2",
+   "enunciado": "1,96 ≤ V < 2,58: significativamente probable, sobre-representación, moderada.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP3"
+   ],
+   "usa": [
+    "ValorObservado",
+    "Rango"
+   ],
+   "conduce_a": [
+    "EstadoInterpretado"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "en_rango",
+      "valor": "RG2"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "valor_observado[ValorTest].rango_resultante",
+      "op": "=",
+      "valor": "RG2"
+     },
+     {
+      "campo": "par.estado",
+      "op": "=",
+      "valor": "E2"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Los umbrales 1,65, 1,96 y 2,58 y el signo del valor test delimitan siete rangos disjuntos que cubren la recta (catálogo A4, 4.1; Informe Inicial).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-3",
+   "enunciado": "1,65 ≤ V < 1,96: sugerente, sobre-representación, débil.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP3"
+   ],
+   "usa": [
+    "ValorObservado",
+    "Rango"
+   ],
+   "conduce_a": [
+    "EstadoInterpretado"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "en_rango",
+      "valor": "RG3"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "valor_observado[ValorTest].rango_resultante",
+      "op": "=",
+      "valor": "RG3"
+     },
+     {
+      "campo": "par.estado",
+      "op": "=",
+      "valor": "E3"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Los umbrales 1,65, 1,96 y 2,58 y el signo del valor test delimitan siete rangos disjuntos que cubren la recta (catálogo A4, 4.1; Informe Inicial).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-4",
+   "enunciado": "−1,65 < V < 1,65: no significativo, neutra, nula.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Latente",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP3"
+   ],
+   "usa": [
+    "ValorObservado",
+    "Rango"
+   ],
+   "conduce_a": [
+    "EstadoInterpretado"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "en_rango",
+      "valor": "RG4"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "valor_observado[ValorTest].rango_resultante",
+      "op": "=",
+      "valor": "RG4"
+     },
+     {
+      "campo": "par.estado",
+      "op": "=",
+      "valor": "E4"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Latente: la exportación actual no incluye pares con |V| menor que 1,65.",
+   "explicacion": "Los umbrales 1,65, 1,96 y 2,58 y el signo del valor test delimitan siete rangos disjuntos que cubren la recta (catálogo A4, 4.1; Informe Inicial).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-5",
+   "enunciado": "−1,96 < V ≤ −1,65: sugerente, sub-representación, débil.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Latente",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP3"
+   ],
+   "usa": [
+    "ValorObservado",
+    "Rango"
+   ],
+   "conduce_a": [
+    "EstadoInterpretado"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "en_rango",
+      "valor": "RG5"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "valor_observado[ValorTest].rango_resultante",
+      "op": "=",
+      "valor": "RG5"
+     },
+     {
+      "campo": "par.estado",
+      "op": "=",
+      "valor": "E5"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Los umbrales 1,65, 1,96 y 2,58 y el signo del valor test delimitan siete rangos disjuntos que cubren la recta (catálogo A4, 4.1; Informe Inicial).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-6",
+   "enunciado": "−2,58 < V ≤ −1,96: significativamente probable, sub-representación, moderada.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Latente",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP3"
+   ],
+   "usa": [
+    "ValorObservado",
+    "Rango"
+   ],
+   "conduce_a": [
+    "EstadoInterpretado"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "en_rango",
+      "valor": "RG6"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "valor_observado[ValorTest].rango_resultante",
+      "op": "=",
+      "valor": "RG6"
+     },
+     {
+      "campo": "par.estado",
+      "op": "=",
+      "valor": "E6"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Los umbrales 1,65, 1,96 y 2,58 y el signo del valor test delimitan siete rangos disjuntos que cubren la recta (catálogo A4, 4.1; Informe Inicial).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-7",
+   "enunciado": "V ≤ −2,58: altamente significativo, sub-representación, fuerte.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Latente",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP3"
+   ],
+   "usa": [
+    "ValorObservado",
+    "Rango"
+   ],
+   "conduce_a": [
+    "EstadoInterpretado"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "en_rango",
+      "valor": "RG7"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "valor_observado[ValorTest].rango_resultante",
+      "op": "=",
+      "valor": "RG7"
+     },
+     {
+      "campo": "par.estado",
+      "op": "=",
+      "valor": "E7"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Los umbrales 1,65, 1,96 y 2,58 y el signo del valor test delimitan siete rangos disjuntos que cubren la recta (catálogo A4, 4.1; Informe Inicial).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-8",
+   "enunciado": "Toda interpretación aclara que el valor test indica significación y no magnitud.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3; F5",
+   "subprocesos": [
+    "SP4"
+   ],
+   "usa": [
+    "Magnitud"
+   ],
+   "conduce_a": [
+    "AdvertenciaMetodologica"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "par.valores[ValorTest]",
+      "op": "presente",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "agrega": [
+     {
+      "campo": "interpretacion.advertencias",
+      "op": "+=",
+      "valor": "AD1"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "El valor test mide la significación de la asociación, no la magnitud del fenómeno; la advertencia evita esa lectura (D5, A4).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-9",
+   "enunciado": "El p-valor se informa exacto si es mayor o igual que 0,01 y como p < 0,01 en caso contrario.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F1, 5.2.2",
+   "subprocesos": [
+    "SP4"
+   ],
+   "usa": [
+    "Magnitud",
+    "ValorObservado"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[PValor].valor_crisp",
+      "op": ">=",
+      "valor": {
+       "parametro": "umbral_p_exacto"
+      }
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "interpretacion.p_texto",
+      "op": "=",
+      "valor": "p = {p_valor}"
+     }
+    ]
+   },
+   "sino": {
+    "asigna": [
+     {
+      "campo": "interpretacion.p_texto",
+      "op": "=",
+      "valor": "p < 0,01"
+     }
+    ]
+   },
+   "excepcion": "",
+   "explicacion": "La tesis informa el p-valor exacto cuando es mayor o igual que 0,01 y como p < 0,01 en caso contrario (F1, 5.2.2).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MI-10",
+   "enunciado": "Los porcentajes se presentan como frecuencias relativas.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F4; F5",
+   "subprocesos": [
+    "SP4"
+   ],
+   "usa": [
+    "Magnitud",
+    "Exportacion"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "interpretacion",
+      "op": "existe",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "interpretacion.rotulo_porcentajes",
+      "op": "=",
+      "valor": "frecuencia relativa"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Los porcentajes provienen de una tabla escalada: se rotulan como frecuencias relativas y no como porcentajes de observaciones.",
+   "formalizacion": "Con decisión propuesta",
+   "decision": "Se aplica a Cat.Class, Class.Cat y Global en toda interpretación, como indica RF-MI-6."
+  },
+  {
+   "id": "R-MI-11",
+   "enunciado": "Si la categoría tiene un peso muy bajo, se advierte que la asociación se apoya en pocos datos.",
+   "modulo": "MI",
+   "tipo": "Heurística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "Análisis del estudiante",
+   "subprocesos": [
+    "SP4"
+   ],
+   "usa": [
+    "Magnitud",
+    "ValorObservado"
+   ],
+   "conduce_a": [
+    "AdvertenciaMetodologica"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "par.peso_bajo",
+      "op": "=",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "agrega": [
+     {
+      "campo": "interpretacion.advertencias",
+      "op": "+=",
+      "valor": "AD2"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "Un elemento de poco peso aporta pocos datos a la asociación; la advertencia lo hace visible al lector.",
+   "formalizacion": "Con decisión propuesta",
+   "decision": "«Peso muy bajo» se precisa como Global < 2 %, donde Global es el peso de la línea del par. El umbral es un parámetro de la base de conocimiento."
+  },
+  {
+   "id": "R-MI-12",
+   "enunciado": "Dos categorías contiguas de la misma variable asociadas a una clase se interpretan como una transición.",
+   "modulo": "MI",
+   "tipo": "Heurística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F1, 5.2.2 (discusión)",
+   "subprocesos": [
+    "SP4"
+   ],
+   "usa": [
+    "Clase",
+    "Categoria"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "par.clase",
+      "op": "=",
+      "valor": "par2.clase"
+     },
+     {
+      "campo": "par.categoria.variable",
+      "op": "=",
+      "valor": "par2.categoria.variable"
+     },
+     {
+      "campo": "abs(par.categoria.indice - par2.categoria.indice)",
+      "op": "=",
+      "valor": {
+       "parametro": "distancia_contigua"
+      }
+     },
+     {
+      "campo": "par.estado.significacion",
+      "op": "!=",
+      "valor": "no significativo"
+     },
+     {
+      "campo": "par2.estado.significacion",
+      "op": "!=",
+      "valor": "no significativo"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "interpretacion.es_transicion",
+      "op": "=",
+      "valor": true
+     },
+     {
+      "campo": "interpretacion.contigua",
+      "op": "=",
+      "valor": "par2.categoria"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "No se aplica a categorías sin número de orden (variables no difusas).",
+   "explicacion": "Dos categorías contiguas de la misma variable describen un paso gradual de la variable y no dos hallazgos independientes (F1, 5.2.2).",
+   "formalizacion": "Con decisión propuesta",
+   "decision": "«Contiguas» se precisa como números de orden consecutivos dentro de la misma variable."
+  },
+  {
+   "id": "R-MI-13",
+   "enunciado": "Si el valor test no es finito, se informa como asociación extrema con el p-valor sin transformar.",
+   "modulo": "MI",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "Análisis del estudiante",
+   "subprocesos": [
+    "SP2"
+   ],
+   "usa": [
+    "Magnitud",
+    "ValorObservado"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "valor_observado[ValorTest].valor_crisp",
+      "op": "no_finito",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "interpretacion.extrema",
+      "op": "=",
+      "valor": true
+     },
+     {
+      "campo": "interpretacion.p_texto",
+      "op": "=",
+      "valor": "{p_valor}"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Tiene prioridad sobre R-MI-9: el p-valor se informa sin transformar.",
+   "explicacion": "Un valor test infinito indica una asociación extrema; el valor no se muestra y se informa el p-valor sin transformar.",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-1",
+   "enunciado": "La síntesis se construye sólo con interpretaciones significativas.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3",
+   "subprocesos": [
+    "SP5"
+   ],
+   "usa": [
+    "InterpretacionAtomica",
+    "EstadoInterpretado"
+   ],
+   "conduce_a": [
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "par.estado.significacion",
+      "op": "!=",
+      "valor": "no significativo"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "interpretacion.es_significativa",
+      "op": "=",
+      "valor": true
+     }
+    ]
+   },
+   "sino": {
+    "asigna": [
+     {
+      "campo": "interpretacion.es_significativa",
+      "op": "=",
+      "valor": false
+     }
+    ]
+   },
+   "excepcion": "",
+   "explicacion": "Son significativas todas las interpretaciones salvo las clasificadas por R-MI-4, es decir, las de |V| ≥ 1,65 (RF-MS-2).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-2",
+   "enunciado": "Las interpretaciones se agrupan por conjunto difuso.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3",
+   "subprocesos": [
+    "SP6"
+   ],
+   "usa": [
+    "InterpretacionAtomica",
+    "ConjuntoDifuso"
+   ],
+   "conduce_a": [
+    "PatronEmergente"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "interpretacion.es_significativa",
+      "op": "=",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "agrupa": [
+     {
+      "campo": "interpretacion",
+      "op": "por",
+      "valor": "par.categoria"
+     },
+     {
+      "campo": "grupo",
+      "op": "es",
+      "valor": "PatronEmergente"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "En la tabla de contingencia el conjunto difuso es la columna, es decir, la categoría del par (F3).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-3",
+   "enunciado": "La fuerza de un patrón es la suma de los valores test absolutos que lo componen.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3",
+   "subprocesos": [
+    "SP7"
+   ],
+   "usa": [
+    "Magnitud",
+    "ValorObservado"
+   ],
+   "conduce_a": [
+    "PatronEmergente"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "patron.interpretaciones",
+      "op": "no_vacia",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "patron.fuerza",
+      "op": "=",
+      "valor": "suma(abs(valor_test))"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Si algún valor test no es finito, la fuerza del patrón es infinita.",
+   "explicacion": "La fuerza resume la relevancia estadística de un conjunto difuso sumando sus valores test absolutos (F3, 5.2).",
+   "formalizacion": "Con decisión propuesta",
+   "decision": "Un valor infinito produce una fuerza infinita y el patrón se ordena primero."
+  },
+  {
+   "id": "R-MS-4",
+   "enunciado": "Los grupos y sus pares se ordenan por relevancia decreciente.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP7"
+   ],
+   "usa": [
+    "PatronEmergente",
+    "ValorObservado"
+   ],
+   "conduce_a": [
+    "PatronEmergente"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "sintesis.patrones",
+      "op": "no_vacia",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "ordena": [
+     {
+      "campo": "sintesis.patrones",
+      "op": "por",
+      "valor": "fuerza desc, nombre asc"
+     },
+     {
+      "campo": "patron.interpretaciones",
+      "op": "por",
+      "valor": "abs(valor_test) desc, clase asc"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "El orden decreciente destaca primero lo más relevante (F2, F3).",
+   "formalizacion": "Con decisión propuesta",
+   "decision": "Los empates se resuelven por nombre para que la misma entrada produzca siempre la misma salida (RNF-2)."
+  },
+  {
+   "id": "R-MS-5",
+   "enunciado": "Una categoría significativa en muchas clases se informa como patrón constante.",
+   "modulo": "MS",
+   "tipo": "Heurística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F1, 5.2.2",
+   "subprocesos": [
+    "SP7"
+   ],
+   "usa": [
+    "Categoria",
+    "Clase"
+   ],
+   "conduce_a": [
+    "PatronConstante"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "exportacion.n_clases",
+      "op": ">=",
+      "valor": {
+       "parametro": "minimo_clases"
+      }
+     },
+     {
+      "campo": "patron.pertenencia_muchas",
+      "op": ">=",
+      "valor": {
+       "parametro": "corte_pertenencia"
+      }
+     }
+    ]
+   },
+   "conclusion": {
+    "clasifica": [
+     {
+      "campo": "patron",
+      "op": "instancia_de",
+      "valor": "PatronConstante"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Con menos clases que el mínimo el patrón no se clasifica.",
+   "explicacion": "La experta destaca como constante a la categoría que se repite en muchas clases (V3_BrisaMuyDebil en 8 de 12 meses).",
+   "formalizacion": "Con decisión propuesta",
+   "decision": "«Muchas clases» se precisa con la etiqueta lingüística «muchas»: función trapezoidal (0,30; 0,60; 1; 1) sobre la proporción de clases."
+  },
+  {
+   "id": "R-MS-6",
+   "enunciado": "Una categoría significativa sólo en algunas clases se informa como singularidad.",
+   "modulo": "MS",
+   "tipo": "Heurística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F1, 5.2.2",
+   "subprocesos": [
+    "SP7"
+   ],
+   "usa": [
+    "Categoria",
+    "Clase"
+   ],
+   "conduce_a": [
+    "Singularidad"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "exportacion.n_clases",
+      "op": ">=",
+      "valor": {
+       "parametro": "minimo_clases"
+      }
+     },
+     {
+      "campo": "patron.pertenencia_algunas",
+      "op": ">=",
+      "valor": {
+       "parametro": "corte_pertenencia"
+      }
+     }
+    ]
+   },
+   "conclusion": {
+    "clasifica": [
+     {
+      "campo": "patron",
+      "op": "instancia_de",
+      "valor": "Singularidad"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Con menos clases que el mínimo el patrón no se clasifica.",
+   "explicacion": "La experta destaca como singular a la categoría que aparece sólo en algunas clases (V2_Ventolina en 3 de 12 meses).",
+   "formalizacion": "Con decisión propuesta",
+   "decision": "«Sólo algunas clases» se precisa con la etiqueta lingüística «algunas»: función trapezoidal (0; 0; 0,25; 0,50) sobre la proporción de clases."
+  },
+  {
+   "id": "R-MS-7",
+   "enunciado": "La síntesis tiene una estructura fija de secciones.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F2; F3",
+   "subprocesos": [
+    "SP8"
+   ],
+   "usa": [
+    "Sintesis"
+   ],
+   "conduce_a": [
+    "SeccionDeLaSintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "sintesis",
+      "op": "existe",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "sintesis.secciones",
+      "op": "=",
+      "valor": [
+       "S1",
+       "S2",
+       "S3",
+       "S4"
+      ]
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "La síntesis tiene cuatro secciones fijas: tres de la propuesta y la de limitaciones que agrega el Informe Inicial (D7).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-8",
+   "enunciado": "Las conclusiones distinguen qué diferencias son estadísticamente relevantes.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F2",
+   "subprocesos": [
+    "SP8"
+   ],
+   "usa": [
+    "EstadoInterpretado"
+   ],
+   "conduce_a": [
+    "SeccionDeLaSintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "seccion",
+      "op": "=",
+      "valor": "S3"
+     }
+    ]
+   },
+   "conclusion": {
+    "exige": [
+     {
+      "campo": "seccion.debe_incluir",
+      "op": "contiene",
+      "valor": "distinción entre las diferencias estadísticamente relevantes y las que no lo son"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "La conclusión debe separar lo que la estadística respalda de lo que no (F2).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-9",
+   "enunciado": "Las asociaciones no significativas no se listan: se informan como cantidad.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Latente",
+   "estado": "Confirmada",
+   "fuente": "Análisis del estudiante",
+   "subprocesos": [
+    "SP5"
+   ],
+   "usa": [
+    "EstadoInterpretado"
+   ],
+   "conduce_a": [
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "sintesis.n_no_significativas",
+      "op": ">",
+      "valor": 0
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "sintesis.cantidad_no_significativas",
+      "op": "=",
+      "valor": "sintesis.n_no_significativas"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Latente: la exportación actual no incluye pares no significativos.",
+   "explicacion": "Las asociaciones no significativas no se listan para no saturar el texto; se informa cuántas son.",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-10",
+   "enunciado": "Las limitaciones mencionan al menos el escalado y la elección de los conjuntos difusos.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F1, 4.1.4; F5",
+   "subprocesos": [
+    "SP8"
+   ],
+   "usa": [
+    "Exportacion",
+    "ConjuntoDifuso"
+   ],
+   "conduce_a": [
+    "SeccionDeLaSintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "seccion",
+      "op": "=",
+      "valor": "S4"
+     }
+    ]
+   },
+   "conclusion": {
+    "exige": [
+     {
+      "campo": "seccion.debe_incluir",
+      "op": "contiene",
+      "valor": "escalado de la tabla"
+     },
+     {
+      "campo": "seccion.debe_incluir",
+      "op": "contiene",
+      "valor": "elección de los conjuntos difusos"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "El escalado y la elección de los conjuntos difusos condicionan la lectura de los valores test (F1, 4.1.4; F5).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-11",
+   "enunciado": "Cada enunciado de la síntesis debe rastrearse hasta una interpretación de MI.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3; F5",
+   "subprocesos": [
+    "SP9"
+   ],
+   "usa": [
+    "InterpretacionAtomica"
+   ],
+   "conduce_a": [
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "seccion.enunciados",
+      "op": "no_vacia",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "exige": [
+     {
+      "campo": "seccion.interpretaciones_usadas",
+      "op": "no_vacia",
+      "valor": true
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Una sección sin interpretaciones de respaldo invalida la síntesis redactada.",
+   "explicacion": "La trazabilidad permite controlar cada enunciado contra la interpretación que lo originó (RNF-1, RF-MS-10).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-MS-12",
+   "enunciado": "El modelo de lenguaje sólo redacta: no agrega asociaciones ni modifica valores.",
+   "modulo": "MS",
+   "tipo": "Determinística",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3; F5",
+   "subprocesos": [
+    "SP8"
+   ],
+   "usa": [
+    "InterpretacionAtomica",
+    "ValorObservado"
+   ],
+   "conduce_a": [
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "texto.valores_numericos",
+      "op": "subconjunto_de",
+      "valor": "hallazgos.valores"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "sintesis.verificada",
+      "op": "=",
+      "valor": true
+     }
+    ]
+   },
+   "sino": {
+    "asigna": [
+     {
+      "campo": "sintesis.verificada",
+      "op": "=",
+      "valor": false
+     }
+    ]
+   },
+   "excepcion": "Si la verificación falla, el estado de redacción pasa a «estructurada» (demonio IF-CHANGED).",
+   "explicacion": "El modelo de lenguaje sólo redacta: todo valor del texto debe figurar entre los hallazgos (RF-MS-8, RF-MS-9).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-PU-1",
+   "enunciado": "Novato: explicaciones conceptuales, analogías simples y frecuencias relativas, sin jerga técnica.",
+   "modulo": "Perfil",
+   "tipo": "Contextual",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3, 5.3",
+   "subprocesos": [
+    "SP4",
+    "SP8"
+   ],
+   "usa": [
+    "PerfilNovato",
+    "Magnitud"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica",
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "usuario.perfil",
+      "op": "=",
+      "valor": "novato"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "configuracion_salida",
+      "op": "=",
+      "valor": "PerfilNovato"
+     },
+     {
+      "campo": "plantilla",
+      "op": "=",
+      "valor": "según regla y perfil"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "La tabla de adaptación por perfil (A5, 7.1) fija qué datos se muestran y con qué terminología; los hallazgos son los mismos para los tres perfiles (RF-PU-4).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-PU-2",
+   "enunciado": "Intermedio: terminología estadística básica, valor test y contribución.",
+   "modulo": "Perfil",
+   "tipo": "Contextual",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3, 5.3",
+   "subprocesos": [
+    "SP4",
+    "SP8"
+   ],
+   "usa": [
+    "PerfilIntermedio",
+    "Magnitud"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica",
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "usuario.perfil",
+      "op": "=",
+      "valor": "intermedio"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "configuracion_salida",
+      "op": "=",
+      "valor": "PerfilIntermedio"
+     },
+     {
+      "campo": "plantilla",
+      "op": "=",
+      "valor": "según regla y perfil"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "La tabla de adaptación por perfil (A5, 7.1) fija qué datos se muestran y con qué terminología; los hallazgos son los mismos para los tres perfiles (RF-PU-4).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-PU-3",
+   "enunciado": "Experto: formulación técnica completa.",
+   "modulo": "Perfil",
+   "tipo": "Contextual",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "F3, 5.3",
+   "subprocesos": [
+    "SP4",
+    "SP8"
+   ],
+   "usa": [
+    "PerfilExperto",
+    "Magnitud"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica",
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "usuario.perfil",
+      "op": "=",
+      "valor": "experto"
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "configuracion_salida",
+      "op": "=",
+      "valor": "PerfilExperto"
+     },
+     {
+      "campo": "plantilla",
+      "op": "=",
+      "valor": "según regla y perfil"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "",
+   "explicacion": "La tabla de adaptación por perfil (A5, 7.1) fija qué datos se muestran y con qué terminología; los hallazgos son los mismos para los tres perfiles (RF-PU-4).",
+   "formalizacion": "Directa",
+   "decision": ""
+  },
+  {
+   "id": "R-PU-4",
+   "enunciado": "El perfil lo elige el usuario antes de solicitar la interpretación.",
+   "modulo": "Perfil",
+   "tipo": "Contextual",
+   "aplicabilidad": "Activa",
+   "estado": "Confirmada",
+   "fuente": "Análisis del estudiante",
+   "subprocesos": [
+    "SP4",
+    "SP8"
+   ],
+   "usa": [
+    "Usuario",
+    "PerfilDeUsuario"
+   ],
+   "conduce_a": [
+    "InterpretacionAtomica",
+    "Sintesis"
+   ],
+   "condicion": {
+    "todas": [
+     {
+      "campo": "invocacion",
+      "op": "existe",
+      "valor": true
+     }
+    ]
+   },
+   "conclusion": {
+    "asigna": [
+     {
+      "campo": "usuario.perfil",
+      "op": "=",
+      "valor": "parámetro de invocación"
+     }
+    ]
+   },
+   "sino": null,
+   "excepcion": "Si no se indica, el perfil por defecto es intermedio (A5, firma de aida()).",
+   "explicacion": "El perfil es un parámetro que se fija antes de ejecutar MI y MS (RF-PU-1).",
+   "formalizacion": "Directa",
+   "decision": ""
+  }
+ ],
+ "marcos": {
+  "Exportacion": {
+   "padre": null,
+   "slots": {
+    "primera_linea": {
+     "nombre": "primera_linea",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "nota": "Primera línea del archivo; identifica el tipo de descripción.",
+     "propio_de": "Exportacion"
+    },
+    "bloque_es": {
+     "nombre": "bloque_es",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "clase",
+      "categoria"
+     ],
+     "nota": "Qué representa el nombre de cada bloque.",
+     "propio_de": "Exportacion"
+    },
+    "escalado_lineal": {
+     "nombre": "escalado_lineal",
+     "tipo": "boolean",
+     "req": true,
+     "default": true,
+     "nota": "Parámetro de invocación; la tabla se escala por defecto.",
+     "propio_de": "Exportacion"
+    },
+    "pares": {
+     "nombre": "pares",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "ParDeAsociacion"
+     ],
+     "nota": "Pares de asociación que contiene el archivo.",
+     "propio_de": "Exportacion"
+    },
+    "n_pares": {
+     "nombre": "n_pares",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta los pares del archivo. Si es cero, el asistente informa que no hay asociaciones para interpretar y finaliza sin error.",
+      "RF-LE-5"
+     ],
+     "propio_de": "Exportacion"
+    },
+    "n_clases": {
+     "nombre": "n_clases",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta las clases distintas de los pares. Es el denominador de la proporción de clases de un patrón.",
+      "R-MS-5, R-MS-6"
+     ],
+     "propio_de": "Exportacion"
+    }
+   }
+  },
+  "DescripcionDeFilas": {
+   "padre": "Exportacion",
+   "slots": {
+    "primera_linea": {
+     "nombre": "primera_linea",
+     "tipo": "string",
+     "req": true,
+     "default": "Descripción filas en función columnas",
+     "nota": "Primera línea del archivo; identifica el tipo de descripción.",
+     "propio_de": "Exportacion",
+     "heredado_de": "Exportacion",
+     "redefinido": true
+    },
+    "bloque_es": {
+     "nombre": "bloque_es",
+     "tipo": "enum",
+     "req": true,
+     "default": "clase",
+     "valores": [
+      "clase",
+      "categoria"
+     ],
+     "nota": "Qué representa el nombre de cada bloque.",
+     "propio_de": "Exportacion",
+     "heredado_de": "Exportacion",
+     "redefinido": true
+    },
+    "escalado_lineal": {
+     "nombre": "escalado_lineal",
+     "tipo": "boolean",
+     "req": true,
+     "default": true,
+     "nota": "Parámetro de invocación; la tabla se escala por defecto.",
+     "propio_de": "Exportacion"
+    },
+    "pares": {
+     "nombre": "pares",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "ParDeAsociacion"
+     ],
+     "nota": "Pares de asociación que contiene el archivo.",
+     "propio_de": "Exportacion"
+    },
+    "n_pares": {
+     "nombre": "n_pares",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta los pares del archivo. Si es cero, el asistente informa que no hay asociaciones para interpretar y finaliza sin error.",
+      "RF-LE-5"
+     ],
+     "propio_de": "Exportacion"
+    },
+    "n_clases": {
+     "nombre": "n_clases",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta las clases distintas de los pares. Es el denominador de la proporción de clases de un patrón.",
+      "R-MS-5, R-MS-6"
+     ],
+     "propio_de": "Exportacion"
+    }
+   }
+  },
+  "DescripcionDeColumnas": {
+   "padre": "Exportacion",
+   "slots": {
+    "primera_linea": {
+     "nombre": "primera_linea",
+     "tipo": "string",
+     "req": true,
+     "default": "Descripción columnas en función filas",
+     "nota": "Primera línea del archivo; identifica el tipo de descripción.",
+     "propio_de": "Exportacion",
+     "heredado_de": "Exportacion",
+     "redefinido": true
+    },
+    "bloque_es": {
+     "nombre": "bloque_es",
+     "tipo": "enum",
+     "req": true,
+     "default": "categoria",
+     "valores": [
+      "clase",
+      "categoria"
+     ],
+     "nota": "El bloque es la categoría y cada línea es una clase.",
+     "propio_de": "Exportacion",
+     "heredado_de": "Exportacion",
+     "redefinido": true
+    },
+    "escalado_lineal": {
+     "nombre": "escalado_lineal",
+     "tipo": "boolean",
+     "req": true,
+     "default": true,
+     "nota": "Parámetro de invocación; la tabla se escala por defecto.",
+     "propio_de": "Exportacion"
+    },
+    "pares": {
+     "nombre": "pares",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "ParDeAsociacion"
+     ],
+     "nota": "Pares de asociación que contiene el archivo.",
+     "propio_de": "Exportacion"
+    },
+    "n_pares": {
+     "nombre": "n_pares",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta los pares del archivo. Si es cero, el asistente informa que no hay asociaciones para interpretar y finaliza sin error.",
+      "RF-LE-5"
+     ],
+     "propio_de": "Exportacion"
+    },
+    "n_clases": {
+     "nombre": "n_clases",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta las clases distintas de los pares. Es el denominador de la proporción de clases de un patrón.",
+      "R-MS-5, R-MS-6"
+     ],
+     "propio_de": "Exportacion"
+    }
+   }
+  },
+  "DescripcionDeGrupos": {
+   "padre": "Exportacion",
+   "slots": {
+    "primera_linea": {
+     "nombre": "primera_linea",
+     "tipo": "string",
+     "req": true,
+     "default": "Descripción grupos filas en función columnas",
+     "nota": "Primera línea del archivo; identifica el tipo de descripción.",
+     "propio_de": "Exportacion",
+     "heredado_de": "Exportacion",
+     "redefinido": true
+    },
+    "bloque_es": {
+     "nombre": "bloque_es",
+     "tipo": "enum",
+     "req": true,
+     "default": "clase",
+     "valores": [
+      "clase",
+      "categoria"
+     ],
+     "nota": "Qué representa el nombre de cada bloque.",
+     "propio_de": "Exportacion",
+     "heredado_de": "Exportacion",
+     "redefinido": true
+    },
+    "escalado_lineal": {
+     "nombre": "escalado_lineal",
+     "tipo": "boolean",
+     "req": true,
+     "default": true,
+     "nota": "Parámetro de invocación; la tabla se escala por defecto.",
+     "propio_de": "Exportacion"
+    },
+    "pares": {
+     "nombre": "pares",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "ParDeAsociacion"
+     ],
+     "nota": "Pares de asociación que contiene el archivo.",
+     "propio_de": "Exportacion"
+    },
+    "n_pares": {
+     "nombre": "n_pares",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta los pares del archivo. Si es cero, el asistente informa que no hay asociaciones para interpretar y finaliza sin error.",
+      "RF-LE-5"
+     ],
+     "propio_de": "Exportacion"
+    },
+    "n_clases": {
+     "nombre": "n_clases",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta las clases distintas de los pares. Es el denominador de la proporción de clases de un patrón.",
+      "R-MS-5, R-MS-6"
+     ],
+     "propio_de": "Exportacion"
+    }
+   }
+  },
+  "Clase": {
+   "padre": null,
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Clase"
+    },
+    "origen": {
+     "nombre": "origen",
+     "tipo": "enum",
+     "req": true,
+     "default": "fila",
+     "valores": [
+      "fila",
+      "grupo"
+     ],
+     "nota": "Es grupo cuando la descripción es de grupos.",
+     "propio_de": "Clase"
+    }
+   }
+  },
+  "ConjuntoDifuso": {
+   "padre": null,
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "ConjuntoDifuso"
+    },
+    "variable": {
+     "nombre": "variable",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "ConjuntoDifuso"
+    },
+    "funcion_pertenencia": {
+     "nombre": "funcion_pertenencia",
+     "tipo": "enum",
+     "req": true,
+     "default": "desconocida",
+     "valores": [
+      "gaussiana",
+      "triangular",
+      "trapezoidal",
+      "desconocida"
+     ],
+     "nota": "La exportación no informa la función de las categorías.",
+     "propio_de": "ConjuntoDifuso"
+    },
+    "parametros": {
+     "nombre": "parametros",
+     "tipo": "number[]",
+     "req": false,
+     "default": null,
+     "nota": "Cuatro valores a, b, c, d cuando la función es trapezoidal.",
+     "propio_de": "ConjuntoDifuso"
+    }
+   }
+  },
+  "Categoria": {
+   "padre": "ConjuntoDifuso",
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "ConjuntoDifuso"
+    },
+    "variable": {
+     "nombre": "variable",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Toma el prefijo alfabético del nombre previo al número (Are1_… → Are). Si el nombre no tiene número, la variable es el nombre completo.",
+      "R-MI-12"
+     ],
+     "propio_de": "ConjuntoDifuso",
+     "heredado_de": "ConjuntoDifuso",
+     "redefinido": true
+    },
+    "funcion_pertenencia": {
+     "nombre": "funcion_pertenencia",
+     "tipo": "enum",
+     "req": true,
+     "default": "desconocida",
+     "valores": [
+      "gaussiana",
+      "triangular",
+      "trapezoidal",
+      "desconocida"
+     ],
+     "nota": "La exportación no informa la función de las categorías.",
+     "propio_de": "ConjuntoDifuso"
+    },
+    "parametros": {
+     "nombre": "parametros",
+     "tipo": "number[]",
+     "req": false,
+     "default": null,
+     "nota": "Cuatro valores a, b, c, d cuando la función es trapezoidal.",
+     "propio_de": "ConjuntoDifuso"
+    },
+    "indice": {
+     "nombre": "indice",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Extrae el número que sigue al prefijo (Are2_… → 2). Queda vacío en las categorías sin número.",
+      "R-MI-12"
+     ],
+     "propio_de": "Categoria"
+    },
+    "limite_inferior": {
+     "nombre": "limite_inferior",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Extrae el primer límite del rango codificado en el nombre (Are2_9.3a20.9_ → 9,3).",
+      null
+     ],
+     "propio_de": "Categoria"
+    },
+    "limite_superior": {
+     "nombre": "limite_superior",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Extrae el segundo límite del rango codificado en el nombre (Are2_9.3a20.9_ → 20,9).",
+      null
+     ],
+     "propio_de": "Categoria"
+    }
+   }
+  },
+  "ParDeAsociacion": {
+   "padre": null,
+   "slots": {
+    "exportacion": {
+     "nombre": "exportacion",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Exportacion"
+     ],
+     "propio_de": "ParDeAsociacion"
+    },
+    "bloque": {
+     "nombre": "bloque",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "nota": "Nombre del bloque del archivo (RF-LE-2).",
+     "propio_de": "ParDeAsociacion"
+    },
+    "linea": {
+     "nombre": "linea",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "nota": "Nombre de la línea del archivo, es decir, de la característica del par.",
+     "propio_de": "ParDeAsociacion"
+    },
+    "clase": {
+     "nombre": "clase",
+     "tipo": "ref",
+     "req": false,
+     "default": null,
+     "valores": [
+      "Clase"
+     ],
+     "demon": [
+      "IF-NEEDED",
+      "En la descripción de filas y de grupos la clase es el bloque; en la de columnas es la línea.",
+      "RF-LE-2"
+     ],
+     "propio_de": "ParDeAsociacion"
+    },
+    "categoria": {
+     "nombre": "categoria",
+     "tipo": "ref",
+     "req": false,
+     "default": null,
+     "valores": [
+      "Categoria"
+     ],
+     "demon": [
+      "IF-NEEDED",
+      "En la descripción de filas y de grupos la categoría es la línea; en la de columnas es el bloque.",
+      "RF-LE-2"
+     ],
+     "propio_de": "ParDeAsociacion"
+    },
+    "valores": {
+     "nombre": "valores",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "ValorObservado"
+     ],
+     "nota": "Los seis valores observados del par.",
+     "propio_de": "ParDeAsociacion"
+    },
+    "estado": {
+     "nombre": "estado",
+     "tipo": "ref",
+     "req": false,
+     "default": null,
+     "valores": [
+      "EstadoInterpretado"
+     ],
+     "demon": [
+      "IF-NEEDED",
+      "Toma el estado asociado al rango en que cae su valor test.",
+      "R-MI-1 a R-MI-7"
+     ],
+     "propio_de": "ParDeAsociacion"
+    },
+    "no_finito": {
+     "nombre": "no_finito",
+     "tipo": "boolean",
+     "req": false,
+     "default": false,
+     "demon": [
+      "IF-NEEDED",
+      "Es verdadero si el valor test no es finito.",
+      "R-MI-13"
+     ],
+     "propio_de": "ParDeAsociacion"
+    },
+    "peso_bajo": {
+     "nombre": "peso_bajo",
+     "tipo": "boolean",
+     "req": false,
+     "default": false,
+     "demon": [
+      "IF-NEEDED",
+      "Es verdadero si el valor Global del par, que mide el peso de la línea, es menor que el umbral de peso bajo.",
+      "R-MI-11"
+     ],
+     "propio_de": "ParDeAsociacion"
+    },
+    "razon_proporciones": {
+     "nombre": "razon_proporciones",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Calcula Cat.Class dividido por Global. Queda vacío si Global es cero.",
+      "R-PU-3"
+     ],
+     "propio_de": "ParDeAsociacion"
+    }
+   }
+  },
+  "Magnitud": {
+   "padre": null,
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Magnitud"
+    },
+    "columna": {
+     "nombre": "columna",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "nota": "Nombre de la columna en la exportación.",
+     "propio_de": "Magnitud"
+    },
+    "unidad": {
+     "nombre": "unidad",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "desviaciones típicas",
+      "probabilidad",
+      "porcentaje",
+      "peso"
+     ],
+     "propio_de": "Magnitud"
+    },
+    "minimo_valido": {
+     "nombre": "minimo_valido",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "propio_de": "Magnitud"
+    },
+    "maximo_valido": {
+     "nombre": "maximo_valido",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "propio_de": "Magnitud"
+    },
+    "definicion": {
+     "nombre": "definicion",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Magnitud"
+    }
+   }
+  },
+  "ValorObservado": {
+   "padre": null,
+   "slots": {
+    "par": {
+     "nombre": "par",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "ParDeAsociacion"
+     ],
+     "propio_de": "ValorObservado"
+    },
+    "magnitud": {
+     "nombre": "magnitud",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Magnitud"
+     ],
+     "propio_de": "ValorObservado"
+    },
+    "valor_crisp": {
+     "nombre": "valor_crisp",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "demon": [
+      "IF-ADDED",
+      "Controla que el valor esté dentro del intervalo válido de la magnitud. El valor test puede ser infinito: en ese caso marca el par como no finito.",
+      "R-MI-13"
+     ],
+     "propio_de": "ValorObservado"
+    },
+    "rango_resultante": {
+     "nombre": "rango_resultante",
+     "tipo": "ref",
+     "req": false,
+     "default": null,
+     "valores": [
+      "Rango"
+     ],
+     "demon": [
+      "IF-NEEDED",
+      "Para el valor test, busca el rango que contiene el valor. Para las demás magnitudes queda vacío.",
+      "R-MI-1 a R-MI-7"
+     ],
+     "propio_de": "ValorObservado"
+    }
+   }
+  },
+  "Rango": {
+   "padre": null,
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Rango"
+    },
+    "magnitud": {
+     "nombre": "magnitud",
+     "tipo": "ref",
+     "req": true,
+     "default": "ValorTest",
+     "valores": [
+      "Magnitud"
+     ],
+     "propio_de": "Rango"
+    },
+    "limite_inferior": {
+     "nombre": "limite_inferior",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "nota": "Sin límite se representa con −1,0E9.",
+     "propio_de": "Rango"
+    },
+    "limite_superior": {
+     "nombre": "limite_superior",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "nota": "Sin límite se representa con 1,0E9.",
+     "propio_de": "Rango"
+    },
+    "cierre_inferior": {
+     "nombre": "cierre_inferior",
+     "tipo": "boolean",
+     "req": true,
+     "default": null,
+     "nota": "Verdadero si el límite inferior pertenece al rango.",
+     "propio_de": "Rango"
+    },
+    "cierre_superior": {
+     "nombre": "cierre_superior",
+     "tipo": "boolean",
+     "req": true,
+     "default": null,
+     "nota": "Verdadero si el límite superior pertenece al rango.",
+     "propio_de": "Rango"
+    },
+    "estado_asociado": {
+     "nombre": "estado_asociado",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "EstadoInterpretado"
+     ],
+     "propio_de": "Rango"
+    },
+    "regla": {
+     "nombre": "regla",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Regla"
+     ],
+     "propio_de": "Rango"
+    }
+   }
+  },
+  "EstadoInterpretado": {
+   "padre": null,
+   "slots": {
+    "significacion": {
+     "nombre": "significacion",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "altamente significativo",
+      "significativamente probable",
+      "sugerente",
+      "no significativo"
+     ],
+     "propio_de": "EstadoInterpretado"
+    },
+    "direccion": {
+     "nombre": "direccion",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "sobre-representación",
+      "sub-representación",
+      "neutra"
+     ],
+     "propio_de": "EstadoInterpretado"
+    },
+    "intensidad": {
+     "nombre": "intensidad",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "fuerte",
+      "moderada",
+      "débil",
+      "nula"
+     ],
+     "propio_de": "EstadoInterpretado"
+    },
+    "explicacion_corta": {
+     "nombre": "explicacion_corta",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "EstadoInterpretado"
+    }
+   }
+  },
+  "Regla": {
+   "padre": null,
+   "slots": {
+    "enunciado": {
+     "nombre": "enunciado",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Regla"
+    },
+    "modulo": {
+     "nombre": "modulo",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "MI",
+      "MS",
+      "Perfil"
+     ],
+     "propio_de": "Regla"
+    },
+    "tipo_conocimiento": {
+     "nombre": "tipo_conocimiento",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Determinística",
+      "Heurística",
+      "Contextual"
+     ],
+     "propio_de": "Regla"
+    },
+    "aplicabilidad": {
+     "nombre": "aplicabilidad",
+     "tipo": "enum",
+     "req": true,
+     "default": "Activa",
+     "valores": [
+      "Activa",
+      "Latente"
+     ],
+     "propio_de": "Regla"
+    },
+    "estado": {
+     "nombre": "estado",
+     "tipo": "enum",
+     "req": true,
+     "default": "Confirmada",
+     "valores": [
+      "Confirmada"
+     ],
+     "propio_de": "Regla"
+    },
+    "fuente": {
+     "nombre": "fuente",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Regla"
+    },
+    "subprocesos": {
+     "nombre": "subprocesos",
+     "tipo": "string[]",
+     "req": true,
+     "default": null,
+     "propio_de": "Regla"
+    },
+    "condicion": {
+     "nombre": "condicion",
+     "tipo": "json",
+     "req": true,
+     "default": null,
+     "propio_de": "Regla"
+    },
+    "conclusion": {
+     "nombre": "conclusion",
+     "tipo": "json",
+     "req": true,
+     "default": null,
+     "propio_de": "Regla"
+    },
+    "excepcion": {
+     "nombre": "excepcion",
+     "tipo": "string",
+     "req": false,
+     "default": null,
+     "propio_de": "Regla"
+    },
+    "explicacion": {
+     "nombre": "explicacion",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Regla"
+    },
+    "formalizacion": {
+     "nombre": "formalizacion",
+     "tipo": "enum",
+     "req": true,
+     "default": "Directa",
+     "valores": [
+      "Directa",
+      "Con decisión propuesta"
+     ],
+     "propio_de": "Regla"
+    },
+    "decision": {
+     "nombre": "decision",
+     "tipo": "string",
+     "req": false,
+     "default": null,
+     "propio_de": "Regla"
+    }
+   }
+  },
+  "Parametro": {
+   "padre": null,
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Parametro"
+    },
+    "valor": {
+     "nombre": "valor",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "propio_de": "Parametro"
+    },
+    "unidad": {
+     "nombre": "unidad",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Parametro"
+    },
+    "regla": {
+     "nombre": "regla",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Parametro"
+    },
+    "estado": {
+     "nombre": "estado",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Confirmado",
+      "Propuesto"
+     ],
+     "propio_de": "Parametro"
+    },
+    "fundamento": {
+     "nombre": "fundamento",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Parametro"
+    }
+   }
+  },
+  "AdvertenciaMetodologica": {
+   "padre": null,
+   "slots": {
+    "texto": {
+     "nombre": "texto",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "AdvertenciaMetodologica"
+    },
+    "texto_novato": {
+     "nombre": "texto_novato",
+     "tipo": "string",
+     "req": false,
+     "default": null,
+     "propio_de": "AdvertenciaMetodologica"
+    },
+    "disparador": {
+     "nombre": "disparador",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "siempre",
+      "peso_bajo",
+      "sintesis",
+      "escalado",
+      "no_escalado"
+     ],
+     "propio_de": "AdvertenciaMetodologica"
+    },
+    "regla": {
+     "nombre": "regla",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Regla"
+     ],
+     "propio_de": "AdvertenciaMetodologica"
+    }
+   }
+  },
+  "Plantilla": {
+   "padre": null,
+   "slots": {
+    "reglas": {
+     "nombre": "reglas",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Regla"
+     ],
+     "propio_de": "Plantilla"
+    },
+    "perfil": {
+     "nombre": "perfil",
+     "tipo": "enum",
+     "req": true,
+     "default": "todos",
+     "valores": [
+      "todos",
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "propio_de": "Plantilla"
+    },
+    "texto": {
+     "nombre": "texto",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "Plantilla"
+    },
+    "campos": {
+     "nombre": "campos",
+     "tipo": "string[]",
+     "req": true,
+     "default": null,
+     "propio_de": "Plantilla"
+    }
+   }
+  },
+  "InterpretacionAtomica": {
+   "padre": null,
+   "slots": {
+    "id": {
+     "nombre": "id",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "InterpretacionAtomica"
+    },
+    "par": {
+     "nombre": "par",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "ParDeAsociacion"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    },
+    "perfil": {
+     "nombre": "perfil",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    },
+    "regla": {
+     "nombre": "regla",
+     "tipo": "ref",
+     "req": false,
+     "default": null,
+     "valores": [
+      "Regla"
+     ],
+     "demon": [
+      "IF-NEEDED",
+      "Toma la regla del rango en que cae el valor test del par.",
+      "R-MI-1 a R-MI-7"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    },
+    "es_significativa": {
+     "nombre": "es_significativa",
+     "tipo": "boolean",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Es verdadera si la significación del estado del par no es «no significativo».",
+      "R-MS-1"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    },
+    "advertencias": {
+     "nombre": "advertencias",
+     "tipo": "ref[]",
+     "req": false,
+     "default": null,
+     "valores": [
+      "AdvertenciaMetodologica"
+     ],
+     "demon": [
+      "IF-NEEDED",
+      "Reúne la advertencia de toda interpretación y, si el par tiene peso bajo, la de peso bajo.",
+      "R-MI-8, R-MI-11"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    },
+    "es_transicion": {
+     "nombre": "es_transicion",
+     "tipo": "boolean",
+     "req": false,
+     "default": false,
+     "demon": [
+      "IF-NEEDED",
+      "Es verdadera si la misma clase tiene otro par significativo con una categoría contigua de la misma variable.",
+      "R-MI-12"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    },
+    "p_texto": {
+     "nombre": "p_texto",
+     "tipo": "string",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Da el formato al p-valor: exacto si es mayor o igual que el umbral, «p < 0,01» en caso contrario. Si el valor test no es finito, deja el p-valor sin transformar.",
+      "R-MI-9, R-MI-13"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    },
+    "plantilla": {
+     "nombre": "plantilla",
+     "tipo": "ref",
+     "req": false,
+     "default": null,
+     "valores": [
+      "Plantilla"
+     ],
+     "demon": [
+      "IF-NEEDED",
+      "Elige la plantilla que corresponde a la regla y al perfil.",
+      "R-PU-1 a R-PU-3"
+     ],
+     "propio_de": "InterpretacionAtomica"
+    }
+   }
+  },
+  "PatronEmergente": {
+   "padre": null,
+   "slots": {
+    "conjunto_difuso": {
+     "nombre": "conjunto_difuso",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Categoria"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "interpretaciones": {
+     "nombre": "interpretaciones",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "InterpretacionAtomica"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "fuerza": {
+     "nombre": "fuerza",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Suma los valores test absolutos de sus interpretaciones. Si alguno no es finito, la fuerza es infinita.",
+      "R-MS-3"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "posicion": {
+     "nombre": "posicion",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Ordena los patrones por fuerza decreciente; el empate se resuelve por nombre.",
+      "R-MS-4"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "proporcion_clases": {
+     "nombre": "proporcion_clases",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Divide las clases en que la categoría es significativa por el total de clases de la exportación.",
+      "R-MS-5, R-MS-6"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "pertenencia_algunas": {
+     "nombre": "pertenencia_algunas",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Evalúa la proporción de clases en la función de pertenencia de «algunas».",
+      "R-MS-6"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "pertenencia_muchas": {
+     "nombre": "pertenencia_muchas",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Evalúa la proporción de clases en la función de pertenencia de «muchas».",
+      "R-MS-5"
+     ],
+     "propio_de": "PatronEmergente"
+    }
+   }
+  },
+  "PatronConstante": {
+   "padre": "PatronEmergente",
+   "slots": {
+    "conjunto_difuso": {
+     "nombre": "conjunto_difuso",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Categoria"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "interpretaciones": {
+     "nombre": "interpretaciones",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "InterpretacionAtomica"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "fuerza": {
+     "nombre": "fuerza",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Suma los valores test absolutos de sus interpretaciones. Si alguno no es finito, la fuerza es infinita.",
+      "R-MS-3"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "posicion": {
+     "nombre": "posicion",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Ordena los patrones por fuerza decreciente; el empate se resuelve por nombre.",
+      "R-MS-4"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "proporcion_clases": {
+     "nombre": "proporcion_clases",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Divide las clases en que la categoría es significativa por el total de clases de la exportación.",
+      "R-MS-5, R-MS-6"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "pertenencia_algunas": {
+     "nombre": "pertenencia_algunas",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Evalúa la proporción de clases en la función de pertenencia de «algunas».",
+      "R-MS-6"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "pertenencia_muchas": {
+     "nombre": "pertenencia_muchas",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "minimo": 0.5,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Evalúa la proporción de clases en la función de pertenencia de «muchas».",
+      "R-MS-5"
+     ],
+     "nota": "La faceta mínima es el corte de pertenencia.",
+     "propio_de": "PatronEmergente",
+     "heredado_de": "PatronEmergente",
+     "redefinido": true
+    }
+   }
+  },
+  "Singularidad": {
+   "padre": "PatronEmergente",
+   "slots": {
+    "conjunto_difuso": {
+     "nombre": "conjunto_difuso",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Categoria"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "interpretaciones": {
+     "nombre": "interpretaciones",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "InterpretacionAtomica"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "fuerza": {
+     "nombre": "fuerza",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Suma los valores test absolutos de sus interpretaciones. Si alguno no es finito, la fuerza es infinita.",
+      "R-MS-3"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "posicion": {
+     "nombre": "posicion",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "minimo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Ordena los patrones por fuerza decreciente; el empate se resuelve por nombre.",
+      "R-MS-4"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "proporcion_clases": {
+     "nombre": "proporcion_clases",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Divide las clases en que la categoría es significativa por el total de clases de la exportación.",
+      "R-MS-5, R-MS-6"
+     ],
+     "propio_de": "PatronEmergente"
+    },
+    "pertenencia_algunas": {
+     "nombre": "pertenencia_algunas",
+     "tipo": "number",
+     "req": true,
+     "default": null,
+     "minimo": 0.5,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Evalúa la proporción de clases en la función de pertenencia de «algunas».",
+      "R-MS-6"
+     ],
+     "nota": "La faceta mínima es el corte de pertenencia.",
+     "propio_de": "PatronEmergente",
+     "heredado_de": "PatronEmergente",
+     "redefinido": true
+    },
+    "pertenencia_muchas": {
+     "nombre": "pertenencia_muchas",
+     "tipo": "number",
+     "req": false,
+     "default": null,
+     "maximo": 1,
+     "demon": [
+      "IF-NEEDED",
+      "Evalúa la proporción de clases en la función de pertenencia de «muchas».",
+      "R-MS-5"
+     ],
+     "propio_de": "PatronEmergente"
+    }
+   }
+  },
+  "Sintesis": {
+   "padre": null,
+   "slots": {
+    "exportacion": {
+     "nombre": "exportacion",
+     "tipo": "ref",
+     "req": true,
+     "default": null,
+     "valores": [
+      "Exportacion"
+     ],
+     "propio_de": "Sintesis"
+    },
+    "perfil": {
+     "nombre": "perfil",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "propio_de": "Sintesis"
+    },
+    "patrones": {
+     "nombre": "patrones",
+     "tipo": "ref[]",
+     "req": false,
+     "default": null,
+     "valores": [
+      "PatronEmergente"
+     ],
+     "propio_de": "Sintesis"
+    },
+    "n_no_significativas": {
+     "nombre": "n_no_significativas",
+     "tipo": "integer",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Cuenta los pares clasificados como no significativos, que se informan como cantidad.",
+      "R-MS-9"
+     ],
+     "propio_de": "Sintesis"
+    },
+    "secciones": {
+     "nombre": "secciones",
+     "tipo": "ref[]",
+     "req": true,
+     "default": null,
+     "valores": [
+      "SeccionDeLaSintesis"
+     ],
+     "propio_de": "Sintesis"
+    },
+    "verificada": {
+     "nombre": "verificada",
+     "tipo": "boolean",
+     "req": false,
+     "default": null,
+     "demon": [
+      "IF-NEEDED",
+      "Compara cada valor numérico del texto con los valores de los hallazgos.",
+      "R-MS-11, R-MS-12"
+     ],
+     "propio_de": "Sintesis"
+    },
+    "estado_redaccion": {
+     "nombre": "estado_redaccion",
+     "tipo": "enum",
+     "req": true,
+     "default": "redactada",
+     "valores": [
+      "redactada",
+      "estructurada"
+     ],
+     "demon": [
+      "IF-CHANGED",
+      "Cuando verificada pasa a falso o el modelo de lenguaje no responde, fija el estado «estructurada» y agrega el aviso.",
+      "R-MS-12"
+     ],
+     "propio_de": "Sintesis"
+    }
+   }
+  },
+  "SeccionDeLaSintesis": {
+   "padre": null,
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "SeccionDeLaSintesis"
+    },
+    "orden": {
+     "nombre": "orden",
+     "tipo": "integer",
+     "req": true,
+     "default": null,
+     "minimo": 1,
+     "maximo": 4,
+     "propio_de": "SeccionDeLaSintesis"
+    },
+    "contenido": {
+     "nombre": "contenido",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "SeccionDeLaSintesis"
+    },
+    "contenido_novato": {
+     "nombre": "contenido_novato",
+     "tipo": "string",
+     "req": false,
+     "default": null,
+     "propio_de": "SeccionDeLaSintesis"
+    },
+    "debe_incluir": {
+     "nombre": "debe_incluir",
+     "tipo": "string[]",
+     "req": false,
+     "default": null,
+     "propio_de": "SeccionDeLaSintesis"
+    }
+   }
+  },
+  "Usuario": {
+   "padre": null,
+   "slots": {
+    "perfil": {
+     "nombre": "perfil",
+     "tipo": "enum",
+     "req": true,
+     "default": "intermedio",
+     "valores": [
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "demon": [
+      "IF-CHANGED",
+      "Invalida las interpretaciones y la síntesis ya redactadas con el perfil anterior, que deben generarse de nuevo.",
+      "R-PU-4"
+     ],
+     "propio_de": "Usuario"
+    },
+    "exportacion": {
+     "nombre": "exportacion",
+     "tipo": "ref",
+     "req": false,
+     "default": null,
+     "valores": [
+      "Exportacion"
+     ],
+     "propio_de": "Usuario"
+    }
+   }
+  },
+  "PerfilDeUsuario": {
+   "padre": null,
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "propio_de": "PerfilDeUsuario"
+    },
+    "terminologia": {
+     "nombre": "terminologia",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "llana",
+      "basica",
+      "tecnica"
+     ],
+     "propio_de": "PerfilDeUsuario"
+    },
+    "valor_test": {
+     "nombre": "valor_test",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "solo_nivel",
+      "valor_y_nivel"
+     ],
+     "propio_de": "PerfilDeUsuario"
+    },
+    "frecuencias": {
+     "nombre": "frecuencias",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "llano",
+      "contribucion",
+      "tecnico"
+     ],
+     "propio_de": "PerfilDeUsuario"
+    },
+    "p_valor_visible": {
+     "nombre": "p_valor_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": null,
+     "propio_de": "PerfilDeUsuario"
+    },
+    "class_cat_visible": {
+     "nombre": "class_cat_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": null,
+     "propio_de": "PerfilDeUsuario"
+    },
+    "razon_proporciones_visible": {
+     "nombre": "razon_proporciones_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": null,
+     "propio_de": "PerfilDeUsuario"
+    },
+    "contribuciones_dimensiones": {
+     "nombre": "contribuciones_dimensiones",
+     "tipo": "enum",
+     "req": true,
+     "default": null,
+     "valores": [
+      "no",
+      "condicionado"
+     ],
+     "propio_de": "PerfilDeUsuario"
+    },
+    "instruccion_registro": {
+     "nombre": "instruccion_registro",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "PerfilDeUsuario"
+    },
+    "guia_redaccion": {
+     "nombre": "guia_redaccion",
+     "tipo": "string[]",
+     "req": true,
+     "default": null,
+     "propio_de": "PerfilDeUsuario"
+    },
+    "ejemplo_estilo": {
+     "nombre": "ejemplo_estilo",
+     "tipo": "string",
+     "req": true,
+     "default": null,
+     "propio_de": "PerfilDeUsuario"
+    },
+    "intensidad_llana": {
+     "nombre": "intensidad_llana",
+     "tipo": "json",
+     "req": false,
+     "default": null,
+     "propio_de": "PerfilDeUsuario"
+    }
+   }
+  },
+  "PerfilNovato": {
+   "padre": "PerfilDeUsuario",
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "enum",
+     "req": true,
+     "default": "novato",
+     "valores": [
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "terminologia": {
+     "nombre": "terminologia",
+     "tipo": "enum",
+     "req": true,
+     "default": "llana",
+     "valores": [
+      "llana",
+      "basica",
+      "tecnica"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "valor_test": {
+     "nombre": "valor_test",
+     "tipo": "enum",
+     "req": true,
+     "default": "solo_nivel",
+     "valores": [
+      "solo_nivel",
+      "valor_y_nivel"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "frecuencias": {
+     "nombre": "frecuencias",
+     "tipo": "enum",
+     "req": true,
+     "default": "llano",
+     "valores": [
+      "llano",
+      "contribucion",
+      "tecnico"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "p_valor_visible": {
+     "nombre": "p_valor_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": false,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "class_cat_visible": {
+     "nombre": "class_cat_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": false,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "razon_proporciones_visible": {
+     "nombre": "razon_proporciones_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": false,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "contribuciones_dimensiones": {
+     "nombre": "contribuciones_dimensiones",
+     "tipo": "enum",
+     "req": true,
+     "default": "no",
+     "valores": [
+      "no",
+      "condicionado"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "instruccion_registro": {
+     "nombre": "instruccion_registro",
+     "tipo": "string",
+     "req": true,
+     "default": "Explicaciones conceptuales, analogías simples sin cifras nuevas y frecuencias relativas, sin jerga técnica.",
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "guia_redaccion": {
+     "nombre": "guia_redaccion",
+     "tipo": "string[]",
+     "req": true,
+     "default": [
+      "Escribe para alguien sin formación en estadística: frases cortas (una idea por frase) y palabras de uso diario.",
+      "Nada de jerga: no uses «sobre-representación», «significativo», siglas ni nombres de pruebas. La intensidad de cada asociación ya viene dicha en palabras comunes («mucho más de lo esperable», «algo más de lo esperable»): úsala tal cual para esa asociación y no le pongas la de otra.",
+      "Cada cifra va en la forma «el N % de los valores de la clase está en este conjunto, cuando en el total ese conjunto sólo reúne el M %».",
+      "Cierra cada hallazgo con una frase breve y sin cifras que no repita la primera; no agregues adjetivos ni conclusiones propias. No uses la palabra «transición»: di que la misma clase también se asocia con el conjunto vecino."
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "ejemplo_estilo": {
+     "nombre": "ejemplo_estilo",
+     "tipo": "string",
+     "req": true,
+     "default": "Hallazgos para el grupo de Ingresos Altos: Este grupo se asocia con dos medios de transporte. El que más lo distingue es el automóvil privado: el 62,4 % de los valores de esta clase está en ese medio, cuando en el total ese medio sólo reúne el 35,0 %; es decir, aparece mucho más de lo esperable. Algo parecido pasa, de forma menos marcada, con la motocicleta, que llega al 41,0 % frente al 22,0 % del total: algo más de lo esperable. En resumen, este grupo se concentra en el automóvil privado y, en menor medida, en la motocicleta.",
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "intensidad_llana": {
+     "nombre": "intensidad_llana",
+     "tipo": "json",
+     "req": false,
+     "default": {
+      "sobre-representación": {
+       "fuerte": "mucho más de lo esperable",
+       "moderada": "algo más de lo esperable",
+       "débil": "apenas más de lo esperable"
+      },
+      "sub-representación": {
+       "fuerte": "mucho menos de lo esperable",
+       "moderada": "algo menos de lo esperable",
+       "débil": "apenas menos de lo esperable"
+      }
+     },
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    }
+   }
+  },
+  "PerfilIntermedio": {
+   "padre": "PerfilDeUsuario",
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "enum",
+     "req": true,
+     "default": "intermedio",
+     "valores": [
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "terminologia": {
+     "nombre": "terminologia",
+     "tipo": "enum",
+     "req": true,
+     "default": "basica",
+     "valores": [
+      "llana",
+      "basica",
+      "tecnica"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "valor_test": {
+     "nombre": "valor_test",
+     "tipo": "enum",
+     "req": true,
+     "default": "valor_y_nivel",
+     "valores": [
+      "solo_nivel",
+      "valor_y_nivel"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "frecuencias": {
+     "nombre": "frecuencias",
+     "tipo": "enum",
+     "req": true,
+     "default": "contribucion",
+     "valores": [
+      "llano",
+      "contribucion",
+      "tecnico"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "p_valor_visible": {
+     "nombre": "p_valor_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": false,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "class_cat_visible": {
+     "nombre": "class_cat_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": false,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "razon_proporciones_visible": {
+     "nombre": "razon_proporciones_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": false,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "contribuciones_dimensiones": {
+     "nombre": "contribuciones_dimensiones",
+     "tipo": "enum",
+     "req": true,
+     "default": "no",
+     "valores": [
+      "no",
+      "condicionado"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "instruccion_registro": {
+     "nombre": "instruccion_registro",
+     "tipo": "string",
+     "req": true,
+     "default": "Terminología estadística básica, valor test y contribución.",
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "guia_redaccion": {
+     "nombre": "guia_redaccion",
+     "tipo": "string[]",
+     "req": true,
+     "default": [
+      "Escribe para alguien con estadística básica: usa «valor test» junto a cada asociación y, en el primer párrafo, incluye una oración propia como esta: «El valor test mide cuán improbable es que la asociación sea casual; no mide cuán intenso es el fenómeno.»",
+      "Di siempre si la asociación es fuerte, moderada o débil (nunca «fuerza fuerte») y el porcentaje con su comparación («frente al N % del total»).",
+      "No uses p-valores, Class.Cat ni razones de proporciones. Una idea por frase, sin tecnicismos de más. La primera vez que nombres una transición, aclara que es la misma clase asociada con dos conjuntos vecinos. No enlaces con frases de relleno («Le sigue», «La tercera asociación es», «Cierra el grupo»): nombra la clase y da sus cifras."
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "ejemplo_estilo": {
+     "nombre": "ejemplo_estilo",
+     "tipo": "string",
+     "req": true,
+     "default": "Hallazgos para el grupo de Ingresos Altos: Este grupo se asocia con dos medios de transporte. El automóvil privado lo caracteriza fuertemente: con un valor test de 4,50 la asociación es estadísticamente sólida, y el 62,4 % de los valores de la clase está en ese medio frente al 35,0 % del total. La motocicleta también se asocia, de forma moderada (valor test de 2,10; 41,0 % frente al 22,0 % del total). En resumen, el grupo se concentra en el automóvil privado y, con menos fuerza, en la motocicleta.",
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    }
+   }
+  },
+  "PerfilExperto": {
+   "padre": "PerfilDeUsuario",
+   "slots": {
+    "nombre": {
+     "nombre": "nombre",
+     "tipo": "enum",
+     "req": true,
+     "default": "experto",
+     "valores": [
+      "novato",
+      "intermedio",
+      "experto"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "terminologia": {
+     "nombre": "terminologia",
+     "tipo": "enum",
+     "req": true,
+     "default": "tecnica",
+     "valores": [
+      "llana",
+      "basica",
+      "tecnica"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "valor_test": {
+     "nombre": "valor_test",
+     "tipo": "enum",
+     "req": true,
+     "default": "valor_y_nivel",
+     "valores": [
+      "solo_nivel",
+      "valor_y_nivel"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "frecuencias": {
+     "nombre": "frecuencias",
+     "tipo": "enum",
+     "req": true,
+     "default": "tecnico",
+     "valores": [
+      "llano",
+      "contribucion",
+      "tecnico"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "p_valor_visible": {
+     "nombre": "p_valor_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": true,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "class_cat_visible": {
+     "nombre": "class_cat_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": true,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "razon_proporciones_visible": {
+     "nombre": "razon_proporciones_visible",
+     "tipo": "boolean",
+     "req": true,
+     "default": true,
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "contribuciones_dimensiones": {
+     "nombre": "contribuciones_dimensiones",
+     "tipo": "enum",
+     "req": true,
+     "default": "condicionado",
+     "valores": [
+      "no",
+      "condicionado"
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "instruccion_registro": {
+     "nombre": "instruccion_registro",
+     "tipo": "string",
+     "req": true,
+     "default": "Formulación técnica completa: valores test, p-valores, contribuciones de la categoría a la clase y razones de proporciones.",
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "guia_redaccion": {
+     "nombre": "guia_redaccion",
+     "tipo": "string[]",
+     "req": true,
+     "default": [
+      "Escribe para alguien con formación estadística: redacción técnica y compacta, sin analogías ni explicaciones de conceptos básicos.",
+      "De cada asociación da, en una sola cláusula o paréntesis y en este orden: valor test, p, porcentaje frente al total, Class.Cat y razón de proporciones. Si varias asociaciones seguidas tienen la misma intensidad, nómbrala una sola vez («sobre-representaciones fuertes de A (…), de B (…) y de C (…)»).",
+      "Usa los términos «sobre-representación», «valor test», «Class.Cat» y «razón de proporciones» sin definirlos; señala si cada asociación es fuerte, moderada o débil."
+     ],
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    },
+    "ejemplo_estilo": {
+     "nombre": "ejemplo_estilo",
+     "tipo": "string",
+     "req": true,
+     "default": "Hallazgos para el grupo de Ingresos Altos: Se observa una sobre-representación fuerte del automóvil privado (valor test 4,50; p < 0,01; 62,4 % frente al 35,0 % del total; Class.Cat 31,2 %; razón de proporciones 1,78) y otra moderada de la motocicleta (valor test 2,10; p = 0,036; 41,0 % frente al 22,0 % del total; Class.Cat 12,5 %; razón de proporciones 1,86). La clase se concentra en el automóvil privado y, en menor grado, en la motocicleta.",
+     "propio_de": "PerfilDeUsuario",
+     "heredado_de": "PerfilDeUsuario",
+     "redefinido": true
+    }
+   }
+  }
+ }
+}

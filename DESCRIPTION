@@ -1,0 +1,9 @@
+Package: aida
+Title: Asistente Inteligente de Interpretacion y Sintesis de Resultados para DaFu
+Version: 0.1.0
+Authors@R: person("Ignacio Julian", "Ambrogetti", role = c("aut", "cre"))
+Description: Interpreta y sintetiza las descripciones que exporta la aplicacion 03 de DaFu.
+    No se instala como paquete: se carga con source("cargar.R"). Este archivo declara las dependencias de R (RNF-8).
+Depends: R (>= 4.1)
+Imports: jsonlite
+Suggests: reticulate, testthat, shiny, DT, shinyWidgets

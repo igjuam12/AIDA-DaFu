@@ -1,0 +1,4 @@
+# Parte en Python de AIDA (redacción de la síntesis)
+jinja2>=3.1.4,<4
+ollama>=0.4,<1    # sólo si AIDA_PROVEEDOR=ollama; Gemini se llama sin bibliotecas adicionales
+pytest>=7,<10     # sólo para las pruebas
