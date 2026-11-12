@@ -170,7 +170,7 @@ Aplica las reglas de interpretación a cada par. Todo está vectorizado: los ran
 
 **`.aida_h_compacto()`**: de cada conjunto sólo van completas las 40 asociaciones de mayor valor test; del resto viajan vectores con lo mínimo que necesita el control (`id`, `clase`, `valor_test`, `transicion`). Python los vuelve a expandir con `_expandir_resto()`.
 
-**`.aida_redactar_python()`**: elige el intérprete (`options(aida.python)` o `AIDA_PYTHON`), avisa si R ya cargó otro, importa `redaccion` y traduce `No module named` a un mensaje con la orden `pip` exacta.
+**`.aida_redactar_python()`**: elige el intérprete (`options(aida.python)` tiene prioridad sobre `AIDA_PYTHON`; si ninguna está definida, decide `reticulate`, que también lee `RETICULATE_PYTHON`), avisa si R ya cargó otro, importa `redaccion` y traduce `No module named` a un mensaje con la orden `pip` exacta.
 
 ### 4.5 `R/aida.R` · API pública
 

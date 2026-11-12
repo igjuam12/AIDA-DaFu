@@ -36,8 +36,10 @@ Hay que cargar AIDA con `source()` (no con `sys.source()`). Si el archivo TXT se
 **Si R no encuentra tu Python,** indicale cuál usar. Esto debe hacerse al comenzar la sesión, antes de usar la síntesis redactada: si R ya inició Python, hay que reiniciar R (Session > Restart R) y repetirlo:
 
 ```r
-options(aida.python = "C:/Users/<tu usuario>/AppData/Local/Programs/Python/Python312/python.exe")
+Sys.setenv(AIDA_PYTHON = "C:/Users/<tu usuario>/AppData/Local/Programs/Python/Python312/python.exe")
 ```
+
+Para dejarlo fijo, escribí `AIDA_PYTHON=C:/ruta/a/python.exe` en el archivo `.Renviron`. En una sesión, `options(aida.python = "...")` hace lo mismo y tiene prioridad (ver README, sección 4).
 
 Si querés usar otro modelo, definí `AIDA_MODELO` en el `.env` o indicalo con `options(aida.modelo = "qwen2.5:7b")`.
 
@@ -108,7 +110,7 @@ Si las clases tienen nombres que son sólo números, AIDA las escribe como «la 
 | «…el modelo tardó demasiado en responder» | Con Ollama, la primera respuesta carga el modelo en memoria; probá de nuevo. |
 | «…Gemini cortó la respuesta (SAFETY…)» o «…se cortó por el límite de tokens» | La respuesta quedó incompleta y no se usa: se entrega la versión estructurada. Probá de nuevo u otro modelo. |
 | «…AIDA_PROVEEDOR debe ser…» | Corregí el `.env`: los valores válidos son `gemini` y `ollama`. |
-| «…falta la biblioteca de Python…» | R está usando otro Python: reiniciá R, configurá `options(aida.python = ...)` y volvé a ejecutar. |
+| «…falta la biblioteca de Python…» | R está usando otro Python: reiniciá R, configurá `AIDA_PYTHON` y volvé a ejecutar. |
 | «…contiene valores que no figuran en los hallazgos» | El modelo inventó un número, o escribió una cantidad con palabras o un cálculo como «la mitad», y la síntesis no pasó el control. Se entrega la versión estructurada, que es la esperada en ese caso. |
 | «…atribuye relaciones que no figuran en los hallazgos» | El modelo vinculó una clase con un conjunto, o dio un conteo, que no coincide con el análisis. Se entrega la versión estructurada. |
 | «El archivo no tiene el formato de una descripción exportada por DaFu» | Usá el TXT de la descripción, no el CSV ni el Excel. |

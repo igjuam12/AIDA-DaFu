@@ -1,0 +1,16 @@
+Descripción grupos filas en función columnas 
+class: E47BIS
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+ent1_4.6a4.9_      2.678   0.007      45.4      18.3   13.9 120.5333
+ent3_5.4a5.7_      1.696   0.090      40.7      14.1   11.9 103.4171
+------------------------------------------------------------ 
+class: ECOBIS
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+ent1_4.6a4.9_      4.950   0.000      54.6      22.6   13.9 120.5333
+ent3_5.4a5.7_      3.214   0.001      48.0      17.0   11.9 103.4171
+------------------------------------------------------------ 
+class: FLOBIS
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+ent2_4.9a5.4_      4.221   0.000      42.8      36.1   26.9 233.4696
+ent4_5.7a6.1_      4.033   0.000      42.9      35.7   26.6 230.6993
+ent5_6.4a6.4_      1.823   0.068      37.2      24.0   20.7 179.1799

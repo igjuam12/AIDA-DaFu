@@ -1,0 +1,76 @@
+Descripción grupos filas en función columnas 
+class: E47_F1_D
+               Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are1_1.3a9.3_       9.003   0.000      13.2      66.2   28.8 640.4769
+Are2_9.3a20.9_      2.082   0.037       7.5      33.7   25.9 575.3474
+------------------------------------------------------------ 
+class: E47_F1_F
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are1_1.3a9.3_     12.289       0      15.3      82.2   28.8 640.4769
+------------------------------------------------------------ 
+class: E47_F2_D
+                Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are3_20.9a31.4_     13.202       0      23.2      67.4   18.9 420.7358
+------------------------------------------------------------ 
+class: E47_F2_F
+                Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are3_20.9a31.4_     11.878       0      21.4      61.9   18.9 420.7358
+------------------------------------------------------------ 
+class: E47_F3_D
+            Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are5_53a53_      19.49       0      34.6      91.9     13 288.9223
+------------------------------------------------------------ 
+class: E47_F3_F
+            Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are5_53a53_     17.954       0      33.5      84.3     13 288.9223
+------------------------------------------------------------ 
+class: ECO_F1_D
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are1_1.3a9.3_     11.448       0      13.7      80.8   28.8 640.4769
+------------------------------------------------------------ 
+class: ECO_F1_F
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are1_1.3a9.3_     11.448       0      13.7      80.8   28.8 640.4769
+------------------------------------------------------------ 
+class: ECO_F2_D
+                Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are3_20.9a31.4_      7.665       0      14.9      47.9   18.9 420.7358
+Are2_9.3a20.9_       4.771       0      10.2      44.9   25.9 575.3474
+------------------------------------------------------------ 
+class: ECO_F2_F
+               Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are2_9.3a20.9_     10.588       0      15.3      69.3   25.9 575.3474
+------------------------------------------------------------ 
+class: ECO_F3_D
+                Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are4_31.4a43.4_     13.416       0      27.0      61.6   13.5 299.7610
+Are5_53a53_          3.720       0      11.1      24.3   13.0 288.9223
+------------------------------------------------------------ 
+class: ECO_F3_F
+                Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are4_31.4a43.4_      8.923       0      19.9      44.0   13.5 299.7610
+Are3_20.9a31.4_      5.489       0      12.4      38.4   18.9 420.7358
+------------------------------------------------------------ 
+class: FLO_F1_D
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are1_1.3a9.3_     12.869       0      14.1      88.4   28.8 640.4769
+------------------------------------------------------------ 
+class: FLO_F1_F
+              Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are1_1.3a9.3_     13.011       0      14.1      89.2   28.8 640.4769
+------------------------------------------------------------ 
+class: FLO_F2_D
+               Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are2_9.3a20.9_      9.943       0      14.9      66.9   25.9 575.3474
+------------------------------------------------------------ 
+class: FLO_F2_F
+               Test.Value p.Value Class.Cat Cat.Class Global   Weight
+Are2_9.3a20.9_      10.13       0      15.1      67.5   25.9 575.3474
+------------------------------------------------------------ 
+class: FLO_F3_D
+                Test.Value p.Value Class.Cat Cat.Class Global  Weight
+Are4_31.4a43.4_      8.125       0        18      41.1   13.5 299.761
+------------------------------------------------------------ 
+class: FLO_F3_F
+                Test.Value p.Value Class.Cat Cat.Class Global  Weight
+Are4_31.4a43.4_      6.908       0      16.3      37.1   13.5 299.761

@@ -62,13 +62,13 @@ Escribir `python -m pip` (y no sólo `pip`) asegura que las bibliotecas queden e
 
 `requirements.txt` instala `jinja2` (arma el prompt), `pytest` (pruebas) y `ollama` (sólo se usa con Ollama).
 
-3. Si R no encuentra ese Python, indicáselo **al comenzar la sesión de R, antes de usar la síntesis redactada** (si R ya inició otro Python, reiniciá R con Session > Restart R):
+3. Si R no encuentra ese Python, indicáselo con la variable `AIDA_PYTHON` **al comenzar la sesión de R, antes de usar la síntesis redactada** (si R ya inició otro Python, reiniciá R con Session > Restart R):
 
 ```r
-Sys.setenv(RETICULATE_PYTHON = "C:/Users/<tu usuario>/AppData/Local/Programs/Python/Python312/python.exe")
+Sys.setenv(AIDA_PYTHON = "C:/Users/<tu usuario>/AppData/Local/Programs/Python/Python312/python.exe")
 ```
 
-Para dejarlo fijo, agregá esa misma línea, sin `Sys.setenv(...)`, en el archivo `.Renviron` (se abre con `usethis::edit_r_environ()`), con el formato `AIDA_PYTHON=C:/ruta/a/python.exe`. En R las rutas se escriben con barras `/` (o con `\\` doble); una sola `\` da error.
+Para dejarlo fijo, escribí `AIDA_PYTHON=C:/ruta/a/python.exe` (sin `Sys.setenv(...)` ni comillas) en el archivo `.Renviron`, que se abre con `usethis::edit_r_environ()`. En una sesión también sirve `options(aida.python = "...")`, que tiene prioridad sobre `AIDA_PYTHON`. Si ninguna está definida, `reticulate` elige el Python con sus propias reglas (entre ellas `RETICULATE_PYTHON`). En R las rutas se escriben con barras `/` (o con `\\` doble); una sola `\` da error.
 
 ## 5. Configurar el modelo de lenguaje
 
